@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -56,9 +56,9 @@ function a11yProps(index) {
 
 
 
-export default function MovieDetails() {
+export default function MovieDetails(props) {
     const classes = useStyles();
-    
+    const [movieId, setmovieId] = useState(props.location.propData.sample);
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -79,7 +79,7 @@ export default function MovieDetails() {
                         </Grid>
                         <Grid item md={9} sm={12} xs={12} className={classes.rightGrid}>
                             <div className={classes.movieDetailsContainer}>
-                                <div className={classes.movieName}>The Easy Reach</div>
+                                <div className={classes.movieName}>{movieId}</div>
                                 <div className={classes.movieDetails}>
                                     Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod tempor.There are many variations of passages of lorem Ipsum available, but the majority have suffered alteration in some injected humour.
                                 </div>

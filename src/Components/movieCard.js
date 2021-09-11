@@ -97,7 +97,7 @@ export default function MovieCardComponent() {
                             <Button size="small" color="primary">
                                 Share
                             </Button>
-                            <Link className={classes.Links} to="/moviedetails"> <Button size="small" color="primary">
+                            <Link className={classes.Links} to={{pathname : "/moviedetails", propData:{sample:item.eventId}}}> <Button size="small" color="primary">
                                 Details
                             </Button>
                             </Link>
