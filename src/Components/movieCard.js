@@ -34,13 +34,15 @@ const useStyles = makeStyles({
     }
 });
 
-export default function MovieCardComponent() {
+export default function MovieCardComponent(props) {
     const classes = useStyles();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
+    const [eventId,setEventId]=useState(0);
+
 
     useEffect(() => {
         fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",{
@@ -52,7 +54,7 @@ export default function MovieCardComponent() {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log('hiiiiiiiiiiiiiiiiiiiiii');
+                    console.log('Movie card is running');
                     console.log(result);
                     console.log(result.events);
                     setIsLoaded(true);
@@ -71,9 +73,8 @@ export default function MovieCardComponent() {
 
     return (
         <>
-
-
-            {items.slice(0, limit ? limit : items.length).map(item => (
+            {items.slice(0, limit ? limit : items.length).map(item => 
+            (
                 <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
                     <Card className={classes.root}>
                         <CardActionArea>
@@ -97,14 +98,19 @@ export default function MovieCardComponent() {
                             <Button size="small" color="primary">
                                 Share
                             </Button>
-                            <Link className={classes.Links} to="/moviedetails"> <Button size="small" color="primary">
-                                Details
-                            </Button>
-                            </Link>
+                            <Link className={classes.Links}  to={{ pathname: "/moviedetails",propData:{movieItem:item.eventId}}}>
+                            {/* {item.eventId} */}
+                            <Button size="small" color="primary" >
+                               Details
+                           </Button>
+                           
+                           </Link>
                         </CardActions>
                     </Card>
                 </Grid>
-            ))}
+            )
+            )
+            }
 
 
 
