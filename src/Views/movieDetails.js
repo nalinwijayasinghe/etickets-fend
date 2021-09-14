@@ -89,6 +89,7 @@ export default function MovieDetails(props) {
                     console.log(result);
                     // console.log(result.events);
                     console.log(result.cast,"API movie deatils cast");
+                    console.log(result.cast.split(","),"API movie deatils cast split");
                     setIsLoaded(true);
                     setItems(result);
 
@@ -119,9 +120,9 @@ export default function MovieDetails(props) {
                         <Grid item md={9} sm={12} xs={12} className={classes.rightGrid}>
                             <div className={classes.movieDetailsContainer}>
                                 <div className={classes.movieName}>{items.title}</div>
-                                <div>
-                                    {items.genres}
-                                </div>
+                                {/* <div> */}
+                                    {/* {items.genres.map(item=>({item}))} */}
+                                {/* </div> */}
                                 <div className={classes.movieDetails}>
                                    {items.plot}
                                    
@@ -171,7 +172,7 @@ export default function MovieDetails(props) {
                     Cast
                 </div>
                 {/* <div>{items.cast}</div> */}
-                <CastPage cast={items.cast}/>
+                {/* <CastPage cast={items.cast}/> */}
 
             </Container>
             
