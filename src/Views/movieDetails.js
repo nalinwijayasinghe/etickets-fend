@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React,{useContext, useEffect} from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,6 +19,7 @@ import SigleMovieImage from '../images/singleMovieImage.jpg'
 import backgroundSMD from "../images/movieBanner.jpg";
 import CastPage from '../Components/cast';
 import Footer from '../Components/footer';
+import {EventContext} from '../eventContext';
 
 
 function TabPanel(props) {
@@ -56,9 +57,14 @@ function a11yProps(index) {
 
 
 
-export default function MovieDetails(props) {
+export default function MovieDetails() {
     const classes = useStyles();
-    const [movieId, setmovieId] = useState(props.location.propData.sample);
+    const [movieId, setMovieId] = useContext(EventContext);
+    useEffect(() => {
+        //setMovieId(movieId);
+        localStorage.setItem('movieId', movieId )
+      }, []);
+    
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -79,7 +85,7 @@ export default function MovieDetails(props) {
                         </Grid>
                         <Grid item md={9} sm={12} xs={12} className={classes.rightGrid}>
                             <div className={classes.movieDetailsContainer}>
-                                <div className={classes.movieName}>{movieId}</div>
+                                <div className={classes.movieName}>The Easy Reach</div>
                                 <div className={classes.movieDetails}>
                                     Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod tempor.There are many variations of passages of lorem Ipsum available, but the majority have suffered alteration in some injected humour.
                                 </div>
@@ -87,7 +93,7 @@ export default function MovieDetails(props) {
                                     Book Tickets
                                 </Button> */}
                                 <Link className={classes.Links} to="/bookingPage"><Button className={classes.buttonStyles1} variant="contained" color="secondary">
-                                    Book Tickets
+                                   Book Tickets{movieId}
                                 </Button></Link>
                             </div>
                         </Grid>

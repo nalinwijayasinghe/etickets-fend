@@ -12,9 +12,11 @@ import Movies from './Views/movies';
 import MovieSingle from './Views/movieDetails';
 import BookingPage from './Views/bookingPage';
 import SeatMap from './Views/seatMap';
+import {EventProvider} from './eventContext';
 
 function App() {
   return (
+    <EventProvider>
     <main>
        <Router>
       <Switch>
@@ -27,6 +29,7 @@ function App() {
       </Switch>
       </Router>
     </main>
+    </EventProvider>
   );
 }
 

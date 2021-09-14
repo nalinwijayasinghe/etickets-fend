@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
 } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -15,6 +16,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { EventContext } from '../eventContext';
 
 const useStyles = makeStyles({
     root: {
@@ -41,6 +43,8 @@ export default function MovieCardComponent() {
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
+    const [movieId, setMovieId] = useContext(EventContext);
+    const history = useHistory();
 
     useEffect(() => {
         fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",{
@@ -67,7 +71,22 @@ export default function MovieCardComponent() {
                     setError(error);
                 }
             )
-    }, [])
+    }, []);
+
+    const updateId = (mId) => {
+        
+        //alert(mId);
+       setMovieId(mId);
+       //window.location.href='/moviedetails'
+       history.push("/moviedetails");
+      
+    }
+
+    // function updateId(mId){
+    //     alert(mId);
+    //     setMovieId(mId);
+    //     window.location.href='/moviedetails'
+    // }
 
     return (
         <>
@@ -97,10 +116,10 @@ export default function MovieCardComponent() {
                             <Button size="small" color="primary">
                                 Share
                             </Button>
-                            <Link className={classes.Links} to={{pathname : "/moviedetails", propData:{sample:item.eventId}}}> <Button size="small" color="primary">
+                            <Button onClick={() => updateId(item.eventId)} size="small" color="primary">
                                 Details
                             </Button>
-                            </Link>
+                            
                         </CardActions>
                     </Card>
                 </Grid>
