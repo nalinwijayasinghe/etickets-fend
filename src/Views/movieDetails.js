@@ -1,5 +1,5 @@
-import React from 'react';
-import{ useState, useEffect } from 'react';
+import React,{useContext, useEffect,useState} from 'react';
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,6 +20,7 @@ import SigleMovieImage from '../images/singleMovieImage.jpg'
 import backgroundSMD from "../images/movieBanner.jpg";
 import CastPage from '../Components/cast';
 import Footer from '../Components/footer';
+import {EventContext} from '../eventContext';
 
 
 function TabPanel(props) {
@@ -59,6 +60,11 @@ function a11yProps(index) {
 
 export default function MovieDetails(props) {
     const classes = useStyles();
+    const [movieId, setMovieId] = useContext(EventContext);
+    useEffect(() => {
+        //setMovieId(movieId);
+        localStorage.setItem('movieId', movieId )
+      }, []);
     
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
@@ -132,7 +138,7 @@ export default function MovieDetails(props) {
                                 </Button> */}
                           
                                 <Link className={classes.Links} to="/bookingPage"><Button className={classes.buttonStyles1} variant="contained" color="secondary">
-                                    Book Tickets
+                                   Book Tickets{movieId}
                                 </Button></Link>
                             </div>
                         </Grid>
