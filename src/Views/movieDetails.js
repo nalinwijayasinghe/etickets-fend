@@ -1,9 +1,10 @@
-import React,{useContext, useEffect} from 'react';
+import React,{useContext, useEffect,useState} from 'react';
+
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,useLocation
 } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -57,7 +58,7 @@ function a11yProps(index) {
 
 
 
-export default function MovieDetails() {
+export default function MovieDetails(props) {
     const classes = useStyles();
     const [movieId, setMovieId] = useContext(EventContext);
     useEffect(() => {
@@ -70,28 +71,72 @@ export default function MovieDetails() {
         setValue(newValue);
     };
 
+
+    // const [movieid,setMovieid] = useState(props.location.propData.movieItem);
+    const [movieid,setMovieid] = useState(1);
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState({});
+    const [limit, setLimit] = useState(5);
+    const [clientToken, setclientToken] = useState('123456');
+    const [eventId,setEventId]=useState(0);
+
+    useEffect(() => {
+        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieid}`,{
+            method: 'GET',
+            headers: { clientToken: clientToken,
+                Accept: 'application/json', },
+            //body: form,
+          })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log('Selected movie card is running');
+                    console.log(result);
+                    // console.log(result.events);
+                    console.log(result.cast,"API movie deatils cast");
+                    console.log(result.cast.split(","),"API movie deatils cast split");
+                    setIsLoaded(true);
+                    setItems(result);
+
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
+
+
     return (
         <>
             <AppBar />
-
-            <div className={classes.mainImageSingleView}>
+            <div className={classes.mainImageSingleView} style={{backgroundImage: `url(${items.banner})`}}>
                 <div className={classes.OverlayDiv}></div>
                 <Container className={classes.gridContainer} >
                     <Grid container className={classes.bgContainer}>
                         <Grid item md={3} sm={12} xs={12} className={classes.leftGrid}>
                             <div className={classes.singleMovieImage}>
-                                <img className={classes.sigleMovieImg} src={SigleMovieImage} />
+                                <img className={classes.sigleMovieImg} src={items.thumbnail} />
                             </div>
                         </Grid>
                         <Grid item md={9} sm={12} xs={12} className={classes.rightGrid}>
                             <div className={classes.movieDetailsContainer}>
-                                <div className={classes.movieName}>The Easy Reach</div>
+                                <div className={classes.movieName}>{items.title}</div>
+                                {/* <div> */}
+                                    {/* {items.genres.map(item=>({item}))} */}
+                                {/* </div> */}
                                 <div className={classes.movieDetails}>
-                                    Lorem ipsum dolor sit amet, consecetur adipiscing elseddo eiusmod tempor.There are many variations of passages of lorem Ipsum available, but the majority have suffered alteration in some injected humour.
+                                   {items.plot}
+                                   
                                 </div>
                                 {/* <Button onClick={handleOpen} className={classes.buttonStyles1} variant="contained" color="secondary">
                                     Book Tickets
                                 </Button> */}
+                          
                                 <Link className={classes.Links} to="/bookingPage"><Button className={classes.buttonStyles1} variant="contained" color="secondary">
                                    Book Tickets{movieId}
                                 </Button></Link>
@@ -114,6 +159,7 @@ export default function MovieDetails() {
                                 The Easy Reach
                             </div>
                             <div className={classes.summaryShort}>
+                          
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec posuere velit. Nullam non orci lacinia, viverra nunc eu, venenatis sem. Fusce finibus mi vitae porttitor vestibulum. Morbi tellus augue, fringilla eu pellentesque sed, bibendum eu arcu. Praesent feugiat augue tempor elit aliquet sollicitudin. Aenean ornare ornare massa eget ornare. Duis consequat urna porttitor felis dapibus varius. Suspendisse ex nulla, ullamcorper eu mi vel, blandit semper ipsum. Maecenas id augue dapibus, interdum massa sed, aliquam nunc. Aenean eu felis facilisis, mollis lorem a, aliquam mi. Donec id nisi nisi. Mauris ullamcorper sapien lorem, nec egestas ipsum cursus in. Vestibulum leo dui, fermentum id est nec, sodales pharetra sem. Maecenas a pulvinar sapien. Sed ullamcorper pharetra massa, vitae commodo nisi bibendum vitae. Pellentesque ut fermentum lacus.
                             </div>
                         </div>
@@ -131,7 +177,8 @@ export default function MovieDetails() {
                 <div className={classes.tabHeading}>
                     Cast
                 </div>
-                <CastPage />
+                {/* <div>{items.cast}</div> */}
+                {/* <CastPage cast={items.cast}/> */}
 
             </Container>
             
@@ -143,7 +190,7 @@ export default function MovieDetails() {
 const useStyles = makeStyles((theme) => ({
 
     mainImageSingleView: {
-        backgroundImage: `url(${backgroundSMD})`,
+       // backgroundImage: `url(${backgroundSMD})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         position: 'relative'

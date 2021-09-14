@@ -36,13 +36,14 @@ const useStyles = makeStyles({
     }
 });
 
-export default function MovieCardComponent() {
+export default function MovieCardComponent(props) {
     const classes = useStyles();
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
+    const [eventId,setEventId]=useState(0);
     const [movieId, setMovieId] = useContext(EventContext);
     const history = useHistory();
 
@@ -56,7 +57,7 @@ export default function MovieCardComponent() {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log('hiiiiiiiiiiiiiiiiiiiiii');
+                    console.log('Movie card is running');
                     console.log(result);
                     console.log(result.events);
                     setIsLoaded(true);
@@ -90,9 +91,8 @@ export default function MovieCardComponent() {
 
     return (
         <>
-
-
-            {items.slice(0, limit ? limit : items.length).map(item => (
+            {items.slice(0, limit ? limit : items.length).map(item => 
+            (
                 <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
                     <Card className={classes.root}>
                         <CardActionArea>
@@ -119,11 +119,13 @@ export default function MovieCardComponent() {
                             <Button onClick={() => updateId(item.eventId)} size="small" color="primary">
                                 Details
                             </Button>
-                            
+                           
                         </CardActions>
                     </Card>
                 </Grid>
-            ))}
+            )
+            )
+            }
 
 
 
