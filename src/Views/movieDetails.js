@@ -73,7 +73,6 @@ export default function MovieDetails(props) {
 
 
     // const [movieid,setMovieid] = useState(props.location.propData.movieItem);
-    const [movieid,setMovieid] = useState(1);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState({});
@@ -82,7 +81,7 @@ export default function MovieDetails(props) {
     const [eventId,setEventId]=useState(0);
 
     useEffect(() => {
-        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieid}`,{
+        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
             method: 'GET',
             headers: { clientToken: clientToken,
                 Accept: 'application/json', },
@@ -95,7 +94,6 @@ export default function MovieDetails(props) {
                     console.log(result);
                     // console.log(result.events);
                     console.log(result.cast,"API movie deatils cast");
-                    console.log(result.cast.split(","),"API movie deatils cast split");
                     setIsLoaded(true);
                     setItems(result);
 
