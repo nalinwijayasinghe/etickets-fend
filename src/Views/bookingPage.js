@@ -45,6 +45,7 @@ export default function BookingPage() {
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
     const [eventId,setEventId]=useState(0);
+    const [venueShowtime,setVenueShowtime]=useState(new Map());
 
     useEffect(() => {
         fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
@@ -85,12 +86,19 @@ useEffect(() => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log('Selected movie venue is running');
-                    console.log(result,"venue is running in bookingPage");
+                    console.log(result,"venues results are running in bookingPage");
+                    console.log(result.dates,"venues are running in bookingPage");
                     setIsLoaded(true);
                     setVenues(result.dates);
-                  
-                    
+                                     
+                    result.dates.forEach(
+                        function(d){
+                            //console.log(d,"1st index");
+                            venueShowtime.set(d.date,d.venues);
+                       
+                         }
+                      )
+                      console.log(venueShowtime.get("2021-09-24"),"date");
 
                 },
                 // Note: it's important to handle errors here
@@ -127,16 +135,18 @@ useEffect(() => {
             </div>
             <div className={classes.datesBackground}>
                 <Container className={classes.dateDetailsContainer}>
-                {venues.map(item=>
-                (
-                    <Button>
+
+                        <Button>
                         <div className={classes.singleDateActive}>
-                            <div className={classes.dateText}>{item.date}</div>
+                            <div className={classes.dateText}></div>
                             {/* <div className={classes.dateText}>mon</div> */}
                         </div>
-                    </Button>
-                ))
-                }
+                    </Button> 
+                        
+
+                 
+ 
+
 
 
 {/* 
