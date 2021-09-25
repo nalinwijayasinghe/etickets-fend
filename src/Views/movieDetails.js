@@ -121,6 +121,7 @@ export default function MovieDetails(props) {
                                 <img className={classes.sigleMovieImg} src={items.thumbnail} />
                             </div>
                         </Grid>
+                        
                         <Grid item md={9} sm={12} xs={12} className={classes.rightGrid}>
                             <div className={classes.movieDetailsContainer}>
                                 <div className={classes.movieName}>{items.title}</div>
