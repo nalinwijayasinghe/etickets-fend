@@ -36,6 +36,12 @@ export default function BookingPage() {
         setOpen(false);
     };
 
+    const changeVanues = (date)=>{
+        // alert(date)
+        console.log(">>>>>>>>>>>>>>>>>>>>>>> date >>>>> "+date)
+        setVenues(venueShowtime.get(date));
+    }
+
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState({});
@@ -45,68 +51,104 @@ export default function BookingPage() {
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
     const [eventId,setEventId]=useState(0);
+    const [venueShowtime,setVenueShowtime]=useState(new Map());
 
-    useEffect(() => {
-        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
+    // useEffect(() => {
+    //     fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
+    //         method: 'GET',
+    //         headers: { clientToken: clientToken,
+    //             Accept: 'application/json', },
+    //         //body: form,
+    //       })
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 console.log('Selected movie booking is running');
+    //                 console.log(result);
+    //                 // console.log(result.events);
+    //                 console.log(result.genres,"API movie genres");
+    //                 setIsLoaded(true);
+    //                 setItems(result);
+    //                 setMovieGenrs(result.genres)
+
+    //             },
+    //             // Note: it's important to handle errors here
+    //             // instead of a catch() block so that we don't swallow
+    //             // exceptions from actual bugs in components.
+    //             (error) => {
+    //                 setIsLoaded(true);
+    //                 setError(error);
+    //             }
+    //         )
+    // }, [])
+
+useEffect(async() => {
+    
+         let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`,{
             method: 'GET',
             headers: { clientToken: clientToken,
                 Accept: 'application/json', },
             //body: form,
-          })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log('Selected movie booking is running');
-                    console.log(result);
-                    // console.log(result.events);
-                    console.log(result.genres,"API movie genres");
-                    setIsLoaded(true);
-                    setItems(result);
-                    setMovieGenrs(result.genres)
+          });
+          let result =await res.json();
+          console.log(result)
+          setIsLoaded(true);
+        //   setVenues(result.dates);
+        let v = new Map();  
+          result.dates.forEach(
+              function(d){
+                  console.log(d,"1st index");
+                  v.set(d.date,d.venues);
+             
+               }
+            );
+            setVenueShowtime(v);
+            console.log("done "+venueShowtime.size);
+            [ ...venueShowtime.keys() ].forEach(function(x){
+                console.log(x)
+            })
+//             .then(res => res.json())
+//             .then(
+//                 (result) => {
+//                     console.log(result,"venues results are running in bookingPage");
+//                     console.log(result.dates,"venues are running in bookingPage");
+//                     setIsLoaded(true);
+//                     setVenues(result.dates);
+//                      let v = new Map();                
+//                     result.dates.forEach(
+//                         function(d){
+//                             console.log(d,"1st index");
+//                             v.set(d.date,d.venues);
+                       
+//                          }
+//                       )
+//                       setVenueShowtime(v);
+//                     //   console.log(venueShowtime.get("2021-09-24"),"date");
+// console.log("done "+venueShowtime.size);
+// [ ...venueShowtime.keys() ].forEach(function(x){
+// console.log(x)
+// })
+// if(venueShowtime.size>0){
+//     setIsLoaded(true);
+// }
 
-                },
+                // },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
                 // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
-
-useEffect(() => {
-        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`,{
-            method: 'GET',
-            headers: { clientToken: clientToken,
-                Accept: 'application/json', },
-            //body: form,
-          })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log('Selected movie venue is running');
-                    console.log(result,"venue is running in bookingPage");
-                    setIsLoaded(true);
-                    setVenues(result.dates);
-                  
-                    
-
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+            //     (error) => {
+            //         // setIsLoaded(true);
+            //         setError(error);
+            //     }
+            // )
     }, [])
 
     
 
     return (
-        <>
+        venueShowtime.size>0 ?(
+                <div>
+                    <>
             <AppBar />
 
             <div className={classes.titleBackground}>
@@ -127,37 +169,62 @@ useEffect(() => {
             </div>
             <div className={classes.datesBackground}>
                 <Container className={classes.dateDetailsContainer}>
-                {venues.map(item=>
-                (
-                    <Button>
-                        <div className={classes.singleDateActive}>
-                            <div className={classes.dateText}>{item.date}</div>
-                            {/* <div className={classes.dateText}>mon</div> */}
-                        </div>
-                    </Button>
-                ))
+                    {/* <span>{JSON.stringify(venueShowtime.keys().next().value)}</span>
+                    <span>{[...venueShowtime.keys() ].length}</span> */}
+
+                {
+                   
+                    [...venueShowtime.keys() ].map((x, i) =>
+                    // <span>{x}</span>
+                    <Button onClick={() => changeVanues(x)}>
+                    <div className={classes.singleDateActive}>
+                        <div className={classes.dateText}>{x}</div>
+                    </div>
+                </Button>
+                    )
+            //        venueShowtime.forEach((role) =>
+            //        <span>{venueShowtime.get(role)}</span>
+            //    )
+                //    [ venueShowtime.keys() ].forEach(function(x){
+                //        <span>{venueShowtime.get(x)}</span>
+                    // <Button>
+                    // <div className={classes.singleDateActive}>
+                    //     <div className={classes.dateText}>{venueShowtime.get(x)}</div>
+                    // </div>
+                // </Button> 
+                   //})
                 }
+                        {/* <Button>
+                        <div className={classes.singleDateActive}>
+                            <div className={classes.dateText}>ddd</div>
+                        </div>
+                    </Button>  */}
+                        
+
+                 
+ 
 
 
-{/* 
+
+
                     <Button>
                         <div className={classes.singleDate}>
                             <div className={classes.dateText}>07</div>
                             <div className={classes.dateText}>tue</div>
                         </div>
-                    </Button> */}
+                    </Button>
                 </Container>
             </div>
             <Container>
                 <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
-
+                
                 {venues.map(item=>
                 (
                             <Grid className={classes.theareSingleGrid} >
 
                                 <Grid item sm={4}>
                                     <div className={classes.theatreDetails}>
-                                        <div className={classes.theatreName}>Sri Venkata Gangaratnam Theatre</div>
+                                        <div className={classes.theatreName}>{item.name}</div>
                                         <Button
                                             variant="text"
                                             className={classes.infoBtn}
@@ -169,9 +236,11 @@ useEffect(() => {
                                 </Grid>
                                 <Grid item sm={8}>
                                     <div className={classes.timeSlots}>
-                                        <Button className={classes.timeBtn} onClick={handleOpen} variant="outlined">11.05 am</Button>
-                                        <Button className={classes.timeBtn} variant="outlined">11.05 am</Button>
-                                        <Button className={classes.timeBtn} variant="outlined">11.05 am</Button>
+                                    {/* <Button className={classes.timeBtn} variant="outlined">{item.showtimes[0].startTime}</Button> */}
+                                    {
+                                    item.showtimes.map((object, i) =>
+                                     <Button className={classes.timeBtn} onClick={handleOpen} variant="outlined">{object.startTime}</Button>)
+                                     }
                                     </div>
                                 </Grid>
 
@@ -225,6 +294,9 @@ useEffect(() => {
             </Modal>
             {/* Modal End */}
         </>
+                </div>
+            ):(<div><p>Hey !!!! I want to select my slot soon !!!</p></div>)
+        
     );
 }
 
