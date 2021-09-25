@@ -12,6 +12,7 @@ import Movies from './Views/movies';
 import MovieSingle from './Views/movieDetails';
 import BookingPage from './Views/bookingPage';
 import SeatMap from './Views/seatMap';
+import Payments from './Views/payments';
 import {EventProvider} from './eventContext';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/moviedetails" component={MovieSingle} />
         <Route path="/bookingPage" component={BookingPage} />
         <Route path="/seatmap" component={SeatMap} />
+        <Route path="/payment" component={Payments} />
         <Route component={Error} />
       </Switch>
       </Router>

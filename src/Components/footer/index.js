@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     footrContainer: {
         backgroundColor: '#4d4d4d',
         padding: 25,
-        marginTop: 40
+        marginTop: 40,
+        
     },
     footerHeading: {
         color: '#bdbdbd'
