@@ -62,7 +62,7 @@ export default function SeatMap() {
                     {/* Seat Row */}
                     <div className={classes.seatRow}>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C11</div>
+                            <div className={classes.seatData} >C11</div>
                         </div>
                         <div className={classes.singleSeat}>
                             <div className={classes.seatData}>C1</div>
@@ -101,7 +101,7 @@ export default function SeatMap() {
                             <div className={classes.seatData}>C1</div>
                         </div>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData} onClick={doThis} style={{backgroundColor:selectedColor?'green':''}}>C1</div>
+                            <div className={classes.seatData} onClick={selectSeat("1")} style={{backgroundColor:selectedColor?'green':''}}>A1</div>
                         </div>
                         <div className={classes.singleSeat}>
                             <div className={classes.seatData}>C1</div>
