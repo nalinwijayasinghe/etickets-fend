@@ -1,5 +1,5 @@
 import React from 'react';
-import {useContext, useEffect,useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,17 +15,18 @@ import InfoIcon from '@material-ui/icons/Info';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import {EventContext} from '../eventContext';
+import { EventContext } from '../eventContext';
 
 export default function BookingPage() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [openVenue, setOpenVenue] = React.useState(false);
 
     const [movieId, setMovieId] = useContext(EventContext);
     useEffect(() => {
         //setMovieId(movieId);
-        localStorage.setItem('movieId', movieId )
-      }, []);
+        localStorage.setItem('movieId', movieId)
+    }, []);
 
 
     const handleOpen = () => {
@@ -36,10 +37,26 @@ export default function BookingPage() {
         setOpen(false);
     };
 
-    const changeVanues = (date)=>{
+    const handleOpenVenue = (vinfo) => {
+        setOpenVenue(true);
+        setvenueDetails({
+            vName: vinfo.name,
+            vAddress: "",
+            vLocation: vinfo.location
+        });
+        console.log('adoooooooooooooooooooo')
+        console.log(vinfo);
+    };
+
+    const handleCloseVenue = () => {
+        setOpenVenue(false);
+    };
+
+    const changeVanues = (date) => {
         // alert(date)
-        console.log(">>>>>>>>>>>>>>>>>>>>>>> date >>>>> "+date)
+        console.log(">>>>>>>>>>>>>>>>>>>>>>> date >>>>> " + date)
         setVenues(venueShowtime.get(date));
+        console.log(">>>>>>>>>>>>>>>>>>>>>>> venue infor >>>>> " + JSON.stringify(venueShowtime.get(date)))
     }
 
     const [error, setError] = useState(null);
@@ -50,8 +67,13 @@ export default function BookingPage() {
     const [movieVenues, setMovieVenues] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('123456');
-    const [eventId,setEventId]=useState(0);
-    const [venueShowtime,setVenueShowtime]=useState(new Map());
+    const [eventId, setEventId] = useState(0);
+    const [venueShowtime, setVenueShowtime] = useState(new Map());
+    const [venueDetails, setvenueDetails] = useState({
+        vName: "",
+        vAddress: "",
+        vLocation: ""
+    })
 
     // useEffect(() => {
     //     fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
@@ -82,144 +104,146 @@ export default function BookingPage() {
     //         )
     // }, [])
 
-useEffect(async() => {
-    
-         let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`,{
+    useEffect(async () => {
+
+        let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`, {
             method: 'GET',
-            headers: { clientToken: clientToken,
-                Accept: 'application/json', },
+            headers: {
+                clientToken: clientToken,
+                Accept: 'application/json',
+            },
             //body: form,
 
-          });
-          let result =await res.json();
-          console.log(result)
-          setIsLoaded(true);
+        });
+        let result = await res.json();
+        console.log(result)
+        setIsLoaded(true);
         //   setVenues(result.dates);
-        let v = new Map();  
-          result.dates.forEach(
-              function(d){
-                  console.log(d,"1st index");
-                  v.set(d.date,d.venues);
-             
-               }
-            );
-            setVenueShowtime(v);
-            console.log("done "+venueShowtime.size);
-            [ ...venueShowtime.keys() ].forEach(function(x){
-                console.log(x)
-            })
-//             .then(res => res.json())
-//             .then(
-//                 (result) => {
-//                     console.log(result,"venues results are running in bookingPage");
-//                     console.log(result.dates,"venues are running in bookingPage");
-//                     setIsLoaded(true);
-//                     setVenues(result.dates);
-//                      let v = new Map();                
-//                     result.dates.forEach(
-//                         function(d){
-//                             console.log(d,"1st index");
-//                             v.set(d.date,d.venues);
-                       
-//                          }
-//                       )
-//                       setVenueShowtime(v);
-//                     //   console.log(venueShowtime.get("2021-09-24"),"date");
-// console.log("done "+venueShowtime.size);
-// [ ...venueShowtime.keys() ].forEach(function(x){
-// console.log(x)
-// })
-// if(venueShowtime.size>0){
-//     setIsLoaded(true);
-// }
+        let v = new Map();
+        result.dates.forEach(
+            function (d) {
+                console.log(d, "1st index");
+                v.set(d.date, d.venues);
 
-                // },
+            }
+        );
+        setVenueShowtime(v);
+        console.log("done " + venueShowtime.size);
+        [...venueShowtime.keys()].forEach(function (x) {
+            console.log(x)
+        })
+        //             .then(res => res.json())
+        //             .then(
+        //                 (result) => {
+        //                     console.log(result,"venues results are running in bookingPage");
+        //                     console.log(result.dates,"venues are running in bookingPage");
+        //                     setIsLoaded(true);
+        //                     setVenues(result.dates);
+        //                      let v = new Map();                
+        //                     result.dates.forEach(
+        //                         function(d){
+        //                             console.log(d,"1st index");
+        //                             v.set(d.date,d.venues);
+
+        //                          }
+        //                       )
+        //                       setVenueShowtime(v);
+        //                     //   console.log(venueShowtime.get("2021-09-24"),"date");
+        // console.log("done "+venueShowtime.size);
+        // [ ...venueShowtime.keys() ].forEach(function(x){
+        // console.log(x)
+        // })
+        // if(venueShowtime.size>0){
+        //     setIsLoaded(true);
+        // }
+
+        // },
 
 
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-            //     (error) => {
-            //         // setIsLoaded(true);
-            //         setError(error);
-            //     }
-            // )
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        //     (error) => {
+        //         // setIsLoaded(true);
+        //         setError(error);
+        //     }
+        // )
     }, [])
 
-    
+
 
     return (
-        venueShowtime.size>0 ?(
-                <div>
-                    <>
-            <AppBar />
+        venueShowtime.size > 0 ? (
+            <div>
+                <>
+                    <AppBar />
 
-            <div className={classes.titleBackground}>
+                    <div className={classes.titleBackground}>
 
-              
-                <Container className={classes.movieDetailsContainer}>
-                 
-                    <div className={classes.movieNameSeatPlan}>{items.title}</div>
-                {movieGenrs.map(item=>
-                (
-                    <div className={classes.tagRow}>
-                        <div className={classes.movieTags}>{item}</div>
+
+                        <Container className={classes.movieDetailsContainer}>
+
+                            <div className={classes.movieNameSeatPlan}>{items.title}</div>
+                            {movieGenrs.map(item =>
+                            (
+                                <div className={classes.tagRow}>
+                                    <div className={classes.movieTags}>{item}</div>
+                                </div>
+                            ))
+                            }
+                        </Container>
+
                     </div>
-                ))
-                }
-                </Container>    
+                    <div className={classes.datesBackground}>
+                        <Container className={classes.dateDetailsContainer}>
 
-            </div>
-            <div className={classes.datesBackground}>
-                <Container className={classes.dateDetailsContainer}>
-
-                    {/* <span>{JSON.stringify(venueShowtime.keys().next().value)}</span>
+                            {/* <span>{JSON.stringify(venueShowtime.keys().next().value)}</span>
                     <span>{[...venueShowtime.keys() ].length}</span> */}
 
-                {
-                   
-                    [...venueShowtime.keys() ].map((x, i) =>
-                    // <span>{x}</span>
-                    <Button onClick={() => changeVanues(x)}>
-                    <div className={classes.singleDateActive}>
-                        <div className={classes.dateText}>{x}</div>
-                    </div>
-                </Button>
-                    )
-            //        venueShowtime.forEach((role) =>
-            //        <span>{venueShowtime.get(role)}</span>
-            //    )
-                //    [ venueShowtime.keys() ].forEach(function(x){
-                //        <span>{venueShowtime.get(x)}</span>
-                    // <Button>
-                    // <div className={classes.singleDateActive}>
-                    //     <div className={classes.dateText}>{venueShowtime.get(x)}</div>
-                    // </div>
-                // </Button> 
-                   //})
-                }
-                        {/* <Button>
+                            {
+
+                                [...venueShowtime.keys()].map((x, i) =>
+                                    // <span>{x}</span>
+                                    <Button onClick={() => changeVanues(x)}>
+                                        <div className={classes.singleDateActive}>
+                                            <div className={classes.dateText}>{x}</div>
+                                        </div>
+                                    </Button>
+                                )
+                                //        venueShowtime.forEach((role) =>
+                                //        <span>{venueShowtime.get(role)}</span>
+                                //    )
+                                //    [ venueShowtime.keys() ].forEach(function(x){
+                                //        <span>{venueShowtime.get(x)}</span>
+                                // <Button>
+                                // <div className={classes.singleDateActive}>
+                                //     <div className={classes.dateText}>{venueShowtime.get(x)}</div>
+                                // </div>
+                                // </Button> 
+                                //})
+                            }
+                            {/* <Button>
                         <div className={classes.singleDateActive}>
                             <div className={classes.dateText}>ddd</div>
                         </div>
                     </Button>  */}
 
-                        
 
 
-                    <Button>
-                        <div className={classes.singleDate}>
-                            <div className={classes.dateText}>07</div>
-                            <div className={classes.dateText}>tue</div>
-                        </div>
-                    </Button>
-                </Container>
-            </div>
-            <Container>
-                <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
-                
-                {venues.map(item=>
-                (
+
+                            <Button>
+                                <div className={classes.singleDate}>
+                                    <div className={classes.dateText}>07</div>
+                                    <div className={classes.dateText}>tue</div>
+                                </div>
+                            </Button>
+                        </Container>
+                    </div>
+                    <Container>
+                        <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
+
+                        {venues.map(item =>
+                        (
                             <Grid className={classes.theareSingleGrid} >
 
                                 <Grid item sm={4}>
@@ -228,7 +252,8 @@ useEffect(async() => {
                                         <Button
                                             variant="text"
                                             className={classes.infoBtn}
-                                            endIcon={<InfoIcon/>}
+                                            endIcon={<InfoIcon />}
+                                            onClick={() => { handleOpenVenue(item) }}
                                         >
                                             Info
                                         </Button>
@@ -236,19 +261,19 @@ useEffect(async() => {
                                 </Grid>
                                 <Grid item sm={8}>
                                     <div className={classes.timeSlots}>
-                                    {/* <Button className={classes.timeBtn} variant="outlined">{item.showtimes[0].startTime}</Button> */}
-                                    {
-                                    item.showtimes.map((object, i) =>
-                                     <Button className={classes.timeBtn} onClick={handleOpen} variant="outlined">{object.startTime}</Button>)
-                                     }
+                                        {/* <Button className={classes.timeBtn} variant="outlined">{item.showtimes[0].startTime}</Button> */}
+                                        {
+                                            item.showtimes.map((object, i) =>
+                                                <Button className={classes.timeBtn} onClick={handleOpen} variant="outlined">{object.startTime}</Button>)
+                                        }
                                     </div>
                                 </Grid>
 
                             </Grid>
-                ))
-                }
-            
-                {/* <Grid className={classes.theareSingleGrid}>
+                        ))
+                        }
+
+                        {/* <Grid className={classes.theareSingleGrid}>
 
                     <Grid item sm={4}>
                         <div className={classes.theatreDetails}>
@@ -271,32 +296,55 @@ useEffect(async() => {
                     </Grid>
 
                 </Grid> */}
-            </Container>
-            {/* Modal Start */}
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Select number of seats</h2>
-                        <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
-                    </div>
-                </Fade>
-            </Modal>
-            {/* Modal End */}
-        </>
-                </div>
-            ):(<div><p>Hey !!!! I want to select my slot soon !!!</p></div>)
-        
+                    </Container>
+                    {/* Modal Start */}
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={open}>
+                            <div className={classes.paper}>
+                                <h2 id="transition-modal-title">Select number of seats</h2>
+                                <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
+                            </div>
+                        </Fade>
+                    </Modal>
+                    {/* Modal End */}
+
+
+                    {/* Venue Modal Start */}
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={classes.modal}
+                        open={openVenue}
+                        onClose={handleCloseVenue}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                            timeout: 500,
+                        }}
+                    >
+                        <Fade in={openVenue}>
+                            <div className={classes.paperVenue}>
+                                <h4 className={classes.venueHeading} id="transition-modal-title">{venueDetails.vName}</h4>
+                                <div>{venueDetails.vLocation}</div>
+                            </div>
+                        </Fade>
+                    </Modal>
+                    {/* Venue Modal End */}
+                </>
+            </div>
+        ) : (<div><p>Hey !!!! I want to select my slot soon !!!</p></div>)
+
     );
 }
 
@@ -316,7 +364,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tagRow: {
         display: 'flex',
-        flexDirection:'row'
+        flexDirection: 'row'
     },
     movieTags: {
         borderRadius: 15,
@@ -393,13 +441,29 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #7b7878',
-        borderRadius:5,
+        borderRadius: 5,
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+    },
+    paperVenue: {
+        backgroundColor: theme.palette.background.paper,
+        //border: '1px solid #7b7878',
+        borderRadius: 5,
+        boxShadow: theme.shadows[5],
+        minWidth:500
+        //padding: theme.spacing(2, 4, 3),
     },
     Links: {
         textDecoration: 'none',
 
     },
+    venueHeading: {
+        margin: 0,
+        backgroundColor: '#d95305',
+        color: '#fff',
+        borderTopLeftRadius:5,
+        borderTopRightRadius:5,
+        padding:15
+    }
 
 }));
