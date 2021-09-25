@@ -75,34 +75,34 @@ export default function BookingPage() {
         vLocation: ""
     })
 
-    // useEffect(() => {
-    //     fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
-    //         method: 'GET',
-    //         headers: { clientToken: clientToken,
-    //             Accept: 'application/json', },
-    //         //body: form,
-    //       })
-    //         .then(res => res.json())
-    //         .then(
-    //             (result) => {
-    //                 console.log('Selected movie booking is running');
-    //                 console.log(result);
-    //                 // console.log(result.events);
-    //                 console.log(result.genres,"API movie genres");
-    //                 setIsLoaded(true);
-    //                 setItems(result);
-    //                 setMovieGenrs(result.genres)
+    useEffect(() => {
+        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
+            method: 'GET',
+            headers: { clientToken: clientToken,
+                Accept: 'application/json', },
+            //body: form,
+          })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log('Selected movie booking is running');
+                    console.log(result);
+                    // console.log(result.events);
+                    console.log(result.genres,"API movie genres");
+                    setIsLoaded(true);
+                    setItems(result);
+                    setMovieGenrs(result.genres)
 
-    //             },
-    //             // Note: it's important to handle errors here
-    //             // instead of a catch() block so that we don't swallow
-    //             // exceptions from actual bugs in components.
-    //             (error) => {
-    //                 setIsLoaded(true);
-    //                 setError(error);
-    //             }
-    //         )
-    // }, [])
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
 
     useEffect(async () => {
 
@@ -184,13 +184,15 @@ export default function BookingPage() {
                         <Container className={classes.movieDetailsContainer}>
 
                             <div className={classes.movieNameSeatPlan}>{items.title}</div>
+                            <div className={classes.tagRow}>
                             {movieGenrs.map(item =>
                             (
-                                <div className={classes.tagRow}>
+                               
                                     <div className={classes.movieTags}>{item}</div>
-                                </div>
+                                
                             ))
                             }
+                            </div>
                         </Container>
 
                     </div>
