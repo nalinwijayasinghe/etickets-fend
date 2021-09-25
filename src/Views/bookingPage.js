@@ -89,6 +89,7 @@ useEffect(async() => {
             headers: { clientToken: clientToken,
                 Accept: 'application/json', },
             //body: form,
+
           });
           let result =await res.json();
           console.log(result)
@@ -133,6 +134,8 @@ useEffect(async() => {
 // }
 
                 // },
+
+
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
                 // exceptions from actual bugs in components.
@@ -169,6 +172,7 @@ useEffect(async() => {
             </div>
             <div className={classes.datesBackground}>
                 <Container className={classes.dateDetailsContainer}>
+
                     {/* <span>{JSON.stringify(venueShowtime.keys().next().value)}</span>
                     <span>{[...venueShowtime.keys() ].length}</span> */}
 
@@ -199,12 +203,8 @@ useEffect(async() => {
                             <div className={classes.dateText}>ddd</div>
                         </div>
                     </Button>  */}
+
                         
-
-                 
- 
-
-
 
 
                     <Button>
