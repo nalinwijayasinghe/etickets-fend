@@ -15,8 +15,14 @@ import Button from '@material-ui/core/Button';
 export default function SeatMap() {
     const classes = useStyles();
     const [selectedColor, setSelectedColor] = useState(false);
+    const [selectedSeat,setSelectedSeat] = useState([]);
     function doThis() {
         setSelectedColor(!selectedColor);}
+
+    const selectSeat =(id)=>{
+        console.log("user select a seat "+id);
+        selectedSeat.push(id);
+    }
 
     return (
         <>
@@ -50,11 +56,13 @@ export default function SeatMap() {
             </div>
             <Container>
                 <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
+                <div>Selected Seats :{selectedSeat.map((seat, i) =>
+                                                <span>{seat}</span>)}</div>
                 <div className={classes.seatMap}>
                     {/* Seat Row */}
                     <div className={classes.seatRow}>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
+                            <div className={classes.seatData}>C11</div>
                         </div>
                         <div className={classes.singleSeat}>
                             <div className={classes.seatData}>C1</div>
