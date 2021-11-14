@@ -66,7 +66,7 @@ export default function BookingPage() {
     const [movieGenrs, setMovieGenrs] = useState([]);
     const [movieVenues, setMovieVenues] = useState([]);
     const [limit, setLimit] = useState(5);
-    const [clientToken, setclientToken] = useState('123456');
+    const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [eventId, setEventId] = useState(0);
     const [venueShowtime, setVenueShowtime] = useState(new Map());
     const [venueDetails, setvenueDetails] = useState({
@@ -109,6 +109,7 @@ export default function BookingPage() {
         let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`, {
             method: 'GET',
             headers: {
+                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY4Mjg4MDN9.L8kvYCdjb1Yj90VlpxHl1DXK499MSMj9KWyy-KNA8To',
                 clientToken: clientToken,
                 Accept: 'application/json',
             },
