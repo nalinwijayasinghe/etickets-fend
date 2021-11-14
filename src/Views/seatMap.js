@@ -9,19 +9,51 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '../Components/appBar';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 
 export default function SeatMap() {
     const classes = useStyles();
     const [selectedColor, setSelectedColor] = useState(false);
     const [selectedSeat,setSelectedSeat] = useState([]);
+    const [adultTicket,setAdultTicket] =useState(0);
+    const [childTicket,setChildTicket] = useState(0);
+    // const [childTicket,setChildTicket] =useState([0]);
+    const options = [
+        'one', 'two', 'three'
+      ];
+    const defaultOption = options[0];
+
     function doThis() {
         setSelectedColor(!selectedColor);}
 
-    const selectSeat =(id)=>{
-        console.log("user select a seat "+id);
+    const selectSeat = (id) => {
+        console.log(id)
+        console.log(selectedSeat)
         selectedSeat.push(id);
+        setSelectedSeat(selectedSeat)
+        console.log("user select a seat " + selectedSeat    );
+        setAdultTicket( selectedSeat.length)
+
+    }
+    const onAdultChange = (symbol)=>{
+        console.log("on adult change")
+        if(symbol==="+"){
+            setAdultTicket( adultTicket+1)
+        }else{
+            setAdultTicket( adultTicket-1)
+        }
+        
+    }
+
+    const onChildChange=(symbol)=>{
+        console.log("on adult change")
+        if(symbol==="+"){
+            setChildTicket( childTicket+1)
+        }else{
+            setChildTicket( childTicket-1)
+        }
     }
 
     return (
@@ -55,23 +87,52 @@ export default function SeatMap() {
                 </Container>
             </div>
             <Container>
-                <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
+                <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
                 <div>Selected Seats :{selectedSeat.map((seat, i) =>
                                                 <span>{seat}</span>)}</div>
+                {selectedSeat.length >0?
+                (
+                <div>
+                    <div><span>Adult:{adultTicket}</span>:
+                    <span>
+                    <div className={classes.btnAndText}>
+                                    <div className={classes.incDecBtn} onClick={onAdultChange("+")}>-</div>
+                                    <div className={classes.bookingDetailRowRight}>{adultTicket}</div>
+                                    <div className={classes.incDecBtn} onClick={onAdultChange("-")}>+</div>
+                                </div>
+                        {/* <Dropdown options={Array.from(Array(selectedSeat.length).keys())} onChange={onAdultChange} value={Array.from(Array(selectedSeat.length).keys())[1]} placeholder="Select an option" />; */}
+                    </span>:
+                    <span>{500* selectedSeat.length}</span></div>
+                    <div><span>Child</span>:
+                    <span>
+                    <div className={classes.btnAndText}>
+                                    <div className={classes.incDecBtn} onClick={onChildChange("+")}>-</div>
+                                    <div className={classes.bookingDetailRowRight}>{childTicket}</div>
+                                    <div className={classes.incDecBtn} onClick={onChildChange("-")}>+</div>
+                                </div>
+                        {/* <Dropdown options={Array.from(Array(selectedSeat.length).keys())} onChange={onAdultChange} value={selectedSeat[0]} placeholder="Select an option" />; */}
+                    </span>
+                    <span>{500* selectedSeat.length}</span></div>
+                </div>
+                ):
+                (<div><span></span></div>)
+            }
+
+                                                
                 <div className={classes.seatMap}>
                     {/* Seat Row */}
                     <div className={classes.seatRow}>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData} >C11</div>
+                            <div className={classes.seatData} onClick={() => selectSeat("C11")} >C11</div>
                         </div>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
+                            <div className={classes.seatData} onClick={() => selectSeat("C12")}>C12</div>
                         </div>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
+                            <div className={classes.seatData} onClick={() => selectSeat("C13")}>C13</div>
                         </div>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
+                            <div className={classes.seatData} onClick={() => selectSeat("C14")}>C14</div>
                         </div>
                         <div className={classes.singleSeat}>
                             <div className={classes.seatData}>C1</div>
@@ -101,7 +162,8 @@ export default function SeatMap() {
                             <div className={classes.seatData}>C1</div>
                         </div>
                         <div className={classes.singleSeat}>
-                            <div className={classes.seatData} onClick={selectSeat("1")} style={{backgroundColor:selectedColor?'green':''}}>A1</div>
+                            <div className={classes.seatData}  
+                             style={{backgroundColor:selectedColor?'green':''}}>A1</div>
                         </div>
                         <div className={classes.singleSeat}>
                             <div className={classes.seatData}>C1</div>
@@ -398,6 +460,25 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
+    incDecBtn: {
+        width: 25,
+        height: 25,
+        borderRadius: 25,
+        backgroundColor: '#fe7e3f',
+        color: '#fff',
+        textAlign: 'center',
+        fontSize:20,
+        lineHeight:1
+    },
+    btnAndText:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    bookingDetailRowRight:{
+        marginLeft:10,
+        marginRight:10
+    }
 
 
 }));

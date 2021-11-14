@@ -40,12 +40,15 @@ export default function MovieCardComponent() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(5);
-    const [clientToken, setclientToken] = useState('123456');
+    const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
 
     useEffect(()=>{
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=CONCERT",
+        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
         {
-            method:'GET',headers: { clientToken: clientToken,Accept: 'application/json', },
+            method:'GET',headers: {
+                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY4Mjg4MDN9.L8kvYCdjb1Yj90VlpxHl1DXK499MSMj9KWyy-KNA8To',
+                 clientToken: clientToken,
+                 Accept: 'application/json', },
         })
         .then(res => res.json())
         .then(
@@ -68,7 +71,8 @@ export default function MovieCardComponent() {
     return (
 
         <>
-        {items.slice(0, limit ? limit : items.length).map(item => (
+        { items !=null?
+        items.slice(0, limit ? limit : items.length).map(item => (
             <Grid item xs={12} md={3} sm={6} xl={3}>
                 <Card className={classes.root}>
                     <CardActionArea>
@@ -99,7 +103,9 @@ export default function MovieCardComponent() {
                     </CardActions>
                 </Card>
             </Grid>
-         ))}
+         ))
+         :{}}
+        
             {/* <Grid item xs={12} md={3} sm={6} xl={3}>
                 <Card className={classes.root}>
                     <CardActionArea>

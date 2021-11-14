@@ -42,37 +42,36 @@ export default function MovieCardComponent(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(5);
-    const [clientToken, setclientToken] = useState('123456');
+    const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [eventId,setEventId]=useState(0);
     const [movieId, setMovieId] = useContext(EventContext);
     const history = useHistory();
 
-    useEffect(() => {
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",{
-            method: 'GET',
-            headers: { clientToken: clientToken,
-                Accept: 'application/json', },
-            //body: form,
-          })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log('Movie card is running');
-                    console.log(result);
-                    console.log(result.events);
-                    setIsLoaded(true);
-                    setItems(result.events);
+    useEffect(()=>{
+        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
+        {
+            method:'GET',headers: {
+                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY4Mjg4MDN9.L8kvYCdjb1Yj90VlpxHl1DXK499MSMj9KWyy-KNA8To',
+                 clientToken: clientToken,
+                 Accept: 'application/json', },
+        })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log('Concert card is running');
+                console.log(result);
+                console.log(result.events);
+                setIsLoaded(true);
+                setItems(result.events);
 
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, []);
+            },
+            (error) => {
+                setIsLoaded(true);
+                setError(error);
+            }
+        )
+
+    },[])
 
     const updateId = (mId) => {
         
@@ -125,7 +124,7 @@ export default function MovieCardComponent(props) {
                 </Grid>
             )
             )
-            }
+           }
 
 
 
