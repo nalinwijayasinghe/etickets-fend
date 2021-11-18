@@ -9,23 +9,28 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '../Components/appBar';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SeatPicker from "react-seat-picker";
+import { ACCESS_TOKEN } from '../Components/constants';
 
 import "./seat_style.css";
 
 
 export default function SeatMap() {
     const classes = useStyles();
-    let seat={
-        id:'',
-        number:''
+    let seat = {
+        id: '',
+        number: ''
     }
     const [selectedColor, setSelectedColor] = useState(false);
-    const [selectedSeat,setSelectedSeat] = useState([]);
-    const [adultTicket,setAdultTicket] =useState(0);
-    const [childTicket,setChildTicket] = useState(0);
+    const [open, setOpen] = React.useState(false);
+    const [selectedSeat, setSelectedSeat] = useState([]);
+    const [adultTicket, setAdultTicket] = useState(0);
+    const [childTicket, setChildTicket] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
     const [error, setError] = useState(null);
@@ -33,43 +38,53 @@ export default function SeatMap() {
     // const [childTicket,setChildTicket] =useState([0]);
     const options = [
         'one', 'two', 'three'
-      ];
+    ];
     const defaultOption = options[0];
 
-    useEffect(()=>{
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
         setChildTicket(8);
         fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2021-11-16&eventId=20&experienceId=1&showtimeId=19&venueId=2",
-        {
-            method:'GET',headers: {
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzcyODcxMjV9.RjV7VHHMWaB6KE09nYx7_gUo5QAbjmZTXTDlevqCkl8',
-                 clientToken: clientToken,
-                 Accept: 'application/json', },
-        })
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log('Concert card is running');
-                // console.log(result);
-                 console.log(result.ticketData);
-               
-                setRows(result.ticketData);
-                console.log(",,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-                console.log(rows)
-                console.log(",,,,,,,,,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
-                setChildTicket(7);
-                setIsLoaded(true);
-                console.log(isLoaded);
-                console.log(childTicket);
+            {
+                method: 'GET', headers: {
+                    Authorization: 'Bearer ' + ACCESS_TOKEN,
+                    clientToken: clientToken,
+                    Accept: 'application/json',
+                },
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log('Concert card is running');
+                    // console.log(result);
+                    console.log(result.ticketData);
 
-            },
-            (error) => {
-                setIsLoaded(true);
-                setError(error);
-            }
-        )
+                    setRows(result.ticketData);
+                    console.log(",,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+                    console.log(rows)
+                    console.log(",,,,,,,,,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
+                    setChildTicket(7);
+                    setIsLoaded(true);
+                    console.log(isLoaded);
+                    console.log(childTicket);
 
-    },[]);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+
+    }, []);
 
     // function doThis() {
     //     setSelectedColor(!selectedColor);}
@@ -79,8 +94,8 @@ export default function SeatMap() {
         console.log(selectedSeat)
         selectedSeat.push(id);
         setSelectedSeat(selectedSeat)
-        console.log("user select a seat " + selectedSeat    );
-      //  setAdultTicket( selectedSeat.length)
+        console.log("user select a seat " + selectedSeat);
+        //  setAdultTicket( selectedSeat.length)
 
     }
     // const onAdultChange = (symbol)=>{
@@ -90,7 +105,7 @@ export default function SeatMap() {
     //     }else{
     //         setAdultTicket( adultTicket-1)
     //     }
-        
+
     // }
 
     // const onChildChange=(symbol)=>{
@@ -108,45 +123,45 @@ export default function SeatMap() {
         //     loading: true
         //   },
         //   async () => {
-            // await new Promise(resolve => setTimeout(resolve, 1500));
-            console.log(`Added seat ${number}, row ${row}, id ${id}`);
-            const newTooltip = `tooltip for id-${id} added by callback`;
-            // const newSelectedSeat =[
-            //     ...selectSeat,
-            //     {
-            //         seatTypeId:"1",
-            //         number:id
+        // await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log(`Added seat ${number}, row ${row}, id ${id}`);
+        const newTooltip = `tooltip for id-${id} added by callback`;
+        // const newSelectedSeat =[
+        //     ...selectSeat,
+        //     {
+        //         seatTypeId:"1",
+        //         number:id
 
-            //     }
-            // ]
-            selectedSeat.push(id);
-            //setSelectedSeat(selectedSeat)
-            console.log("user select a seat " + selectedSeat    );
-            //setAdultTicket( selectedSeat.length)
-            addCb(row, number, id, newTooltip);
-            console.log("user select a seat " + selectedSeat    );
-            // this.setState({ loading: false });
+        //     }
+        // ]
+        selectedSeat.push(id);
+        //setSelectedSeat(selectedSeat)
+        console.log("user select a seat " + selectedSeat);
+        //setAdultTicket( selectedSeat.length)
+        addCb(row, number, id, newTooltip);
+        console.log("user select a seat " + selectedSeat);
+        // this.setState({ loading: false });
         //   }
         // );
-      };
+    };
 
-      const removeSeatCallback = ({ row, number, id }, removeCb) => {
+    const removeSeatCallback = ({ row, number, id }, removeCb) => {
         // this.setState(
         //   {
         //     loading: true
         //   },
         //   async () => {
-            // await new Promise(resolve => setTimeout(resolve, 1500));
-            console.log(`Removed seat ${number}, row ${row}, id ${id}`);
-            // A value of null will reset the tooltip to the original while '' will hide the tooltip
-             const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
-            removeCb(row, number, newTooltip);
-            // this.setState({ loading: false });
+        // await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log(`Removed seat ${number}, row ${row}, id ${id}`);
+        // A value of null will reset the tooltip to the original while '' will hide the tooltip
+        const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
+        removeCb(row, number, newTooltip);
+        // this.setState({ loading: false });
         //   }
         // );
-      };
+    };
 
-    
+
 
     return (
         <>
@@ -175,70 +190,92 @@ export default function SeatMap() {
 
                         </div>
                     </Button>
-
+                    <Button className={classes.seatNumberBtn} onClick={handleOpen}>Select number of seats</Button>
                 </Container>
             </div>
             <Container>
-            {isLoaded ? (
-                <div>
-                    {
-                rows.map((i) => (
+                {isLoaded ? (
                     <div>
-                        <span>{i.name}</span>
-                <SeatPicker 
-                rows={i.seats}
-                 maxReservableSeats={3} 
-                 visible
-                addSeatCallback={addSeatCallback}
-                removeSeatCallback={removeSeatCallback}/>
+                        {
+                            rows.map((i) => (
+                                <div>
+                                    <span>{i.name}</span>
+                                    <SeatPicker
+                                        rows={i.seats}
+                                        maxReservableSeats={3}
+                                        visible
+                                        addSeatCallback={addSeatCallback}
+                                        removeSeatCallback={removeSeatCallback} />
+                                </div>
+
+                            ))
+                        }
                     </div>
-                    
-                ))
-                } 
-                </div>
-                
-            //     <SeatPicker
-            //     // addSeatCallback={this.addSeatCallback}
-            //     // removeSeatCallback={this.removeSeatCallback}
-            //     rows={rows}
-            //     maxReservableSeats={3}
-            //     alpha
-            //     visible
-            //     selectedByDefault
-            //     // loading={loading}
-            //     tooltipProps={{ multiline: true }}
-            //   />
-            ) : (
-                <p>eeeeee</p>
-            )}
+
+                    //     <SeatPicker
+                    //     // addSeatCallback={this.addSeatCallback}
+                    //     // removeSeatCallback={this.removeSeatCallback}
+                    //     rows={rows}
+                    //     maxReservableSeats={3}
+                    //     alpha
+                    //     visible
+                    //     selectedByDefault
+                    //     // loading={loading}
+                    //     tooltipProps={{ multiline: true }}
+                    //   />
+                ) : (
+                    <p>eeeeee</p>
+                )}
                 <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
                 <div>Selected Seats :{selectedSeat.map((seat, i) =>
-                                                <span>{seat}</span>)}</div>
-                {selectedSeat.length >0?
-                (
-                <div>
-                    <div><span>Adult:{adultTicket}</span>:
-                    
-                    <span>{500* selectedSeat.length}</span></div>
-                    <div><span>Child</span>:
-                    <span>
-                    <div className={classes.btnAndText}>
-                                    {/* <div className={classes.incDecBtn} onClick={onChildChange("+")}>-</div>
+                    <span>{seat}</span>)}</div>
+                {selectedSeat.length > 0 ?
+                    (
+                        <div>
+                            <div><span>Adult:{adultTicket}</span>:
+
+                                <span>{500 * selectedSeat.length}</span></div>
+                            <div><span>Child</span>:
+                                <span>
+                                    <div className={classes.btnAndText}>
+                                        {/* <div className={classes.incDecBtn} onClick={onChildChange("+")}>-</div>
                                     <div className={classes.bookingDetailRowRight}>{childTicket}</div>
                                     <div className={classes.incDecBtn} onClick={onChildChange("-")}>+</div> */}
-                                </div>
-                        {/* <Dropdown options={Array.from(Array(selectedSeat.length).keys())} onChange={onAdultChange} value={selectedSeat[0]} placeholder="Select an option" />; */}
-                    </span>
-                    <span>{500* selectedSeat.length}</span></div>
-                </div>
-                ):
-                (<div><span></span></div>)
-            }
+                                    </div>
+                                    {/* <Dropdown options={Array.from(Array(selectedSeat.length).keys())} onChange={onAdultChange} value={selectedSeat[0]} placeholder="Select an option" />; */}
+                                </span>
+                                <span>{500 * selectedSeat.length}</span></div>
+                        </div>
+                    ) :
+                    (<div><span></span></div>)
+                }
 
-                                                
-                
+
+
 
             </Container>
+
+            {/* Modal Start */}
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Select number of seats</h2>
+                        <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
+                    </div>
+                </Fade>
+            </Modal>
+            {/* Modal End */}
 
         </>
     );
@@ -272,7 +309,9 @@ const useStyles = makeStyles((theme) => ({
         margin: '5px 5px 0 5px'
     },
     datesBackground: {
-        boxShadow: "1px 3px 11px #ddd"
+        boxShadow: "1px 3px 11px #ddd",
+        display:'flex',
+        flexDirection:'row'
     },
     dateDetailsContainer: {
         display: 'flex'
@@ -379,18 +418,24 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#fe7e3f',
         color: '#fff',
         textAlign: 'center',
-        fontSize:20,
-        lineHeight:1
+        fontSize: 20,
+        lineHeight: 1
     },
-    btnAndText:{
-        display:'flex',
-        flexDirection:'row',
-        alignItems:'center'
+    btnAndText: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    bookingDetailRowRight:{
-        marginLeft:10,
-        marginRight:10
-    }
+    bookingDetailRowRight: {
+        marginLeft: 10,
+        marginRight: 10
+    },
+    Links: {
+        textDecoration: 'none',
 
+    },
+    seatNumberBtn:{
+        marginLeft:'auto'
+    }
 
 }));

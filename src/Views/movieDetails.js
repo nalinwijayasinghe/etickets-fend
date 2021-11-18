@@ -21,6 +21,7 @@ import backgroundSMD from "../images/movieBanner.jpg";
 import CastPage from '../Components/cast';
 import Footer from '../Components/footer';
 import {EventContext} from '../eventContext';
+import {ACCESS_TOKEN} from '../Components/constants';
 
 
 function TabPanel(props) {
@@ -84,7 +85,7 @@ export default function MovieDetails(props) {
         fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
             method: 'GET',
             headers: { 
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY5OTg3MjN9.4AVfvsTlyUw9M2uv5vd2c1Tn4_QrvWsvzEa63-PYm0M',
+                Authorization:'Bearer '+ACCESS_TOKEN,
                 clientToken: clientToken,
                 Accept: 'application/json', },
             //body: form,

@@ -16,10 +16,10 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { EventContext } from '../eventContext';
+import {ACCESS_TOKEN} from '../Components/constants';
 
 export default function BookingPage() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
     const [openVenue, setOpenVenue] = React.useState(false);
 
     const [movieId, setMovieId] = useContext(EventContext);
@@ -29,13 +29,7 @@ export default function BookingPage() {
     }, []);
 
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+   
 
     const handleOpenVenue = (vinfo) => {
         setOpenVenue(true);
@@ -109,7 +103,7 @@ export default function BookingPage() {
         let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`, {
             method: 'GET',
             headers: {
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY5OTg3MjN9.4AVfvsTlyUw9M2uv5vd2c1Tn4_QrvWsvzEa63-PYm0M',
+                Authorization:'Bearer '+ACCESS_TOKEN,
                 clientToken: clientToken,
                 Accept: 'application/json',
             },
@@ -265,7 +259,7 @@ export default function BookingPage() {
                                         {/* <Button className={classes.timeBtn} variant="outlined">{item.showtimes[0].startTime}</Button> */}
                                         {
                                             item.showtimes.map((object, i) =>
-                                                <Button className={classes.timeBtn} onClick={handleOpen} variant="outlined">{object.startTime}</Button>)
+                                            <Link className={classes.Links} to="/seatmap"><Button className={classes.timeBtn} variant="outlined">{object.startTime}</Button></Link>)
                                         }
                                     </div>
                                 </Grid>
@@ -298,27 +292,7 @@ export default function BookingPage() {
 
                 </Grid> */}
                     </Container>
-                    {/* Modal Start */}
-                    <Modal
-                        aria-labelledby="transition-modal-title"
-                        aria-describedby="transition-modal-description"
-                        className={classes.modal}
-                        open={open}
-                        onClose={handleClose}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                            timeout: 500,
-                        }}
-                    >
-                        <Fade in={open}>
-                            <div className={classes.paper}>
-                                <h2 id="transition-modal-title">Select number of seats</h2>
-                                <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
-                            </div>
-                        </Fade>
-                    </Modal>
-                    {/* Modal End */}
+                    
 
 
                     {/* Venue Modal Start */}
