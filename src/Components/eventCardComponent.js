@@ -46,7 +46,7 @@ export default function MovieCardComponent() {
         fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
         {
             method:'GET',headers: {
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY4Mjg4MDN9.L8kvYCdjb1Yj90VlpxHl1DXK499MSMj9KWyy-KNA8To',
+                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY5OTg3MjN9.4AVfvsTlyUw9M2uv5vd2c1Tn4_QrvWsvzEa63-PYm0M',
                  clientToken: clientToken,
                  Accept: 'application/json', },
         })
