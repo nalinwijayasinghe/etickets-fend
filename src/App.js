@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from './Views/home';
 import Movies from './Views/movies';
+import Events from './Views/events';
 import MovieSingle from './Views/movieDetails';
 import BookingPage from './Views/bookingPage';
 import SeatMap from './Views/seatMap';
@@ -23,6 +24,7 @@ function App() {
       <Switch>
         <Route path="/" component={Home} exact  />
         <Route path="/movies" component={Movies} />
+        <Route path="/events" component={Events} />
         <Route path="/moviedetails" component={MovieSingle} />
         <Route path="/bookingPage" component={BookingPage} />
         <Route path="/seatmap" component={SeatMap} />
