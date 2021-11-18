@@ -18,7 +18,9 @@
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^1.0.1",
-    "react-dropdown": "1.9.2"
+    "react-dropdown": "1.9.2",
+    "react-seat-picker": "1.5.3",
+    "react-tooltip": "3.11.1"
   },
   "scripts": {
     "start": "react-scripts start",

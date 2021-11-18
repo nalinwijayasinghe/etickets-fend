@@ -109,7 +109,10 @@ export default function BookingPage() {
         let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`, {
             method: 'GET',
             headers: {
+
                 Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzczMTIzMTJ9.bf7yLA-AlaKDIkwxZdNNH7nUhcbnwONxeIGnvjKKYz4',
+
+
                 clientToken: clientToken,
                 Accept: 'application/json',
             },
