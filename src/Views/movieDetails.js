@@ -84,11 +84,10 @@ export default function MovieDetails(props) {
         fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
             method: 'GET',
             headers: { 
-<<<<<<< HEAD
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzcwODUxODJ9.uxusWH3FeMGtcUIzBXky9YVwtqnxZJrqSGP1xJslksQ',
-=======
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzY5OTg3MjN9.4AVfvsTlyUw9M2uv5vd2c1Tn4_QrvWsvzEa63-PYm0M',
->>>>>>> dev
+
+                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzczMTIzMTJ9.bf7yLA-AlaKDIkwxZdNNH7nUhcbnwONxeIGnvjKKYz4',
+
+
                 clientToken: clientToken,
                 Accept: 'application/json', },
             //body: form,
