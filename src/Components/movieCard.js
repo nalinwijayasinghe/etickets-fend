@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { EventContext } from '../eventContext';
+import {ACCESS_TOKEN} from '../Components/constants';
 
 const useStyles = makeStyles({
     root: {
@@ -51,9 +52,7 @@ export default function MovieCardComponent(props) {
         fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
         {
             method:'GET',headers: {
-
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzczMTIzMTJ9.bf7yLA-AlaKDIkwxZdNNH7nUhcbnwONxeIGnvjKKYz4',
-
+                Authorization:'Bearer '+ACCESS_TOKEN,
                  clientToken: clientToken,
                  Accept: 'application/json', },
         })

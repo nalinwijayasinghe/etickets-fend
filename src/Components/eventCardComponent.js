@@ -47,7 +47,7 @@ export default function MovieCardComponent() {
         {
             method:'GET',headers: {
 
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzczMTIzMTJ9.bf7yLA-AlaKDIkwxZdNNH7nUhcbnwONxeIGnvjKKYz4',
+                Authorization:'Bearer '+ACCESS_TOKEN ,
 
                  clientToken: clientToken,
                  Accept: 'application/json', },

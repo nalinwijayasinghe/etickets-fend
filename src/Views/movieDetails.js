@@ -21,6 +21,7 @@ import backgroundSMD from "../images/movieBanner.jpg";
 import CastPage from '../Components/cast';
 import Footer from '../Components/footer';
 import {EventContext} from '../eventContext';
+import {ACCESS_TOKEN} from '../Components/constants';
 
 
 function TabPanel(props) {
@@ -85,9 +86,7 @@ export default function MovieDetails(props) {
             method: 'GET',
             headers: { 
 
-                Authorization:'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2MzczMTIzMTJ9.bf7yLA-AlaKDIkwxZdNNH7nUhcbnwONxeIGnvjKKYz4',
-
-
+                Authorization:'Bearer '+ACCESS_TOKEN,
                 clientToken: clientToken,
                 Accept: 'application/json', },
             //body: form,
