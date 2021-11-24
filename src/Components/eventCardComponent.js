@@ -15,6 +15,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import {ACCESS_TOKEN} from '../Components/constants';
 
 const useStyles = makeStyles({
     root: {
@@ -47,7 +48,7 @@ export default function MovieCardComponent() {
         {
             method:'GET',headers: {
 
-                Authorization:'Bearer '+ACCESS_TOKEN ,
+                Authorization:'Bearer '+ ACCESS_TOKEN ,
 
                  clientToken: clientToken,
                  Accept: 'application/json', },

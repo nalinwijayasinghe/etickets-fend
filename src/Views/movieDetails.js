@@ -65,6 +65,8 @@ export default function MovieDetails(props) {
     useEffect(() => {
         //setMovieId(movieId);
         localStorage.setItem('movieId', movieId )
+        localStorage.setItem('movieGenrs', movieGenres )
+
       }, []);
     
     const [value, setValue] = React.useState(0);
@@ -80,6 +82,7 @@ export default function MovieDetails(props) {
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [eventId,setEventId]=useState(0);
+      const [movieGenres, setMovieGenres] = useContext(EventContext);
 
     useEffect(() => {
         fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
