@@ -50,13 +50,16 @@ export default function BookingPage() {
         // alert(date)
         console.log(">>>>>>>>>>>>>>>>>>>>>>> date >>>>> " + date)
         setVenues(venueShowtime.get(date));
-        console.log(">>>>>>>>>>>>>>>>>>>>>>> venue infor >>>>> " + JSON.stringify(venueShowtime.get(date)))
+        setselectedDate(date);
+        console.log(">>>>>>>>>>>>>>>>>>>>>>> venue infor >>>>> " + JSON.stringify(venueShowtime.get(date)));
+        
     }
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState({});
     const [venues, setVenues] = useState([]);
+    const [selectedDate, setselectedDate] = useState('');
     const [movieGenrs, setMovieGenrs] = useState([]);
     const [movieVenues, setMovieVenues] = useState([]);
     const [limit, setLimit] = useState(5);
@@ -199,9 +202,9 @@ export default function BookingPage() {
                             {
 
                                 [...venueShowtime.keys()].map((x, i) =>
-                                    // <span>{x}</span>
+                                    
                                     <Button onClick={() => changeVanues(x)}>
-                                        <div className={classes.singleDateActive}>
+                                        <div className={selectedDate===x ? classes.singleDateActive : classes.selectedDateInactive}>
                                             <div className={classes.dateText}>{x}</div>
                                         </div>
                                     </Button>
@@ -227,16 +230,16 @@ export default function BookingPage() {
 
 
 
-                            <Button>
+                            {/* <Button>
                                 <div className={classes.singleDate}>
                                     <div className={classes.dateText}>07</div>
                                     <div className={classes.dateText}>tue</div>
                                 </div>
-                            </Button>
+                            </Button> */}
                         </Container>
                     </div>
                     <Container>
-                        <div className={classes.dateTextLine}>Monday, September 06, 2021</div>
+                        <div className={classes.dateTextLine}>{selectedDate}</div>
 
                         {venues.map(item =>
                         (
@@ -319,7 +322,7 @@ export default function BookingPage() {
                     {/* Venue Modal End */}
                 </>
             </div>
-        ) : (<div><p>Hey !!!! I want to select my slot soon !!!</p></div>)
+        ) : (<div className={classes.loadingDiv}><p>Loading...</p></div>)
 
     );
 }
@@ -328,6 +331,11 @@ const useStyles = makeStyles((theme) => ({
     titleBackground: {
         backgroundColor: '#3b3b3b',
         padding: 24
+    },
+    loadingDiv:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
     },
     movieDetailsContainer: {
         display: 'flex',
@@ -379,6 +387,16 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 5,
         minWidth: '35px',
     },
+    selectedDateInactive:{
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#898989',
+        padding: '5px 10px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        minWidth: '35px',
+    },
     dateText: {
         fontWeight: 'bold',
         color: '#fff'
@@ -402,8 +420,10 @@ const useStyles = makeStyles((theme) => ({
         color: '#3b3b3b'
     },
     dateTextLine: {
-        fontSize: 12,
-        margin: '15px 0'
+        fontSize: 16,
+        margin: '15px 0',
+        fontWeight:'bold',
+        color:'#0d9dd2'
     },
     infoBtn: {
         fontSize: '12px',
