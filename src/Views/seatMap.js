@@ -236,8 +236,8 @@ export default function SeatMap() {
 
                         <div id="seatplan" className={classes.seatMap}>
                         {rows.map((row)=>(
-                           <div>{row.name}</div>
-                           {(row.seats).map((seatRows)=>(
+                        //    <div>{row.name}</div>
+                           (row.seats).map((seatRows)=>(
                             <div className={classes.seatRow}>
                             {seatRows.map((seatRow)=>(
                                 (seatRow !=null)?
@@ -247,8 +247,7 @@ export default function SeatMap() {
                                 
                             ))}
                             </div>
-                        ))}
-                           
+                        ))                         
                         )
                         )
 }
