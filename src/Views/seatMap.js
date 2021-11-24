@@ -64,21 +64,49 @@ export default function SeatMap() {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log('Concert card is running');
+                    console.log('Concert card is running....');
                     // console.log(result);
-                    console.log(result.ticketData);
-
-                    setRows(result.ticketData);
-                    console.log(",,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-                    console.log(rows)
-                    console.log(",,,,,,,,,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
+                    // console.log(result.ticketData);
+                    let data =result.ticketData;
+                    console.log(data);
+                    setRows(data);
+                    console.log(",,,,,,,,,,,,,dddddddcccc,,,,,,,,,,,,,,,,,,,"+rows.length);
+                    //  console.log(rows[0].seats[0][0].id)
+                    //let x=rows[0].seats;
+                    // for (let row in rows) {
+                    //     let type = result.ticketData[row];
+                    //     console.log("......................ssssssssssssssssssssssssss")
+                    //     let y=type.seats;
+                    //     console.log("............yyyyyyyyyyyyyyyyyyyyyyyyyyyssssssssssssss"+y[0][0].id)
+                    //     for (let s in y){
+                    //         let se = y[s];
+                    //         for (let j in se){
+                    //             if(se[j]!=null){
+                    //                 console.log("seat id ::-====================::::: "+ se[j].id);
+                    //             }
+                                
+                    //         }
+                            
+                    //     }
+                    // }
+                    // console.log(">>>>>>>>>>>>>>>>>>>>>>...... c.c.>>>"+x[0][0].id)
+                    // rows.map(function(seatType){
+                    //     (seatType.seats).map(function(seatRow){
+                    //         seatRow.map(function(eachSeat){
+                    //             console.log(eachSeat.id);
+                    //         })
+                    //     })
+                    // });
+                    
+                    console.log(",,,,,,xxx,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
                     setChildTicket(7);
                     setIsLoaded(true);
                     console.log(isLoaded);
-                    console.log(childTicket);
+                    // console.log(childTicket);
 
                 },
                 (error) => {
+                    console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
                     setIsLoaded(true);
                     setError(error);
                 }
@@ -90,11 +118,11 @@ export default function SeatMap() {
     //     setSelectedColor(!selectedColor);}
 
     const selectSeat = (id) => {
-        console.log(id)
-        console.log(selectedSeat)
-        selectedSeat.push(id);
-        setSelectedSeat(selectedSeat)
-        console.log("user select a seat " + selectedSeat);
+         console.log(id)
+        // console.log(selectedSeat)
+         selectedSeat.push(id);
+         //setSelectedSeat(selectedSeat)
+         //console.log("user select a seat " + selectedSeat);
         //  setAdultTicket( selectedSeat.length)
 
     }
@@ -117,49 +145,49 @@ export default function SeatMap() {
     //     }
     // }
 
-    const addSeatCallback = ({ row, number, id }, addCb) => {
-        // this.setState(
-        //   {
-        //     loading: true
-        //   },
-        //   async () => {
-        // await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log(`Added seat ${number}, row ${row}, id ${id}`);
-        const newTooltip = `tooltip for id-${id} added by callback`;
-        // const newSelectedSeat =[
-        //     ...selectSeat,
-        //     {
-        //         seatTypeId:"1",
-        //         number:id
+    // const addSeatCallback = ({ row, number, id }, addCb) => {
+    //     // this.setState(
+    //     //   {
+    //     //     loading: true
+    //     //   },
+    //     //   async () => {
+    //     // await new Promise(resolve => setTimeout(resolve, 1500));
+    //     console.log(`Added seat ${number}, row ${row}, id ${id}`);
+    //     const newTooltip = `tooltip for id-${id} added by callback`;
+    //     // const newSelectedSeat =[
+    //     //     ...selectSeat,
+    //     //     {
+    //     //         seatTypeId:"1",
+    //     //         number:id
 
-        //     }
-        // ]
-        selectedSeat.push(id);
-        //setSelectedSeat(selectedSeat)
-        console.log("user select a seat " + selectedSeat);
-        //setAdultTicket( selectedSeat.length)
-        addCb(row, number, id, newTooltip);
-        console.log("user select a seat " + selectedSeat);
-        // this.setState({ loading: false });
-        //   }
-        // );
-    };
+    //     //     }
+    //     // ]
+    //     selectedSeat.push(id);
+    //     //setSelectedSeat(selectedSeat)
+    //     console.log("user select a seat " + selectedSeat);
+    //     //setAdultTicket( selectedSeat.length)
+    //     addCb(row, number, id, newTooltip);
+    //     console.log("user select a seat " + selectedSeat);
+    //     // this.setState({ loading: false });
+    //     //   }
+    //     // );
+    // };
 
-    const removeSeatCallback = ({ row, number, id }, removeCb) => {
-        // this.setState(
-        //   {
-        //     loading: true
-        //   },
-        //   async () => {
-        // await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log(`Removed seat ${number}, row ${row}, id ${id}`);
-        // A value of null will reset the tooltip to the original while '' will hide the tooltip
-        const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
-        removeCb(row, number, newTooltip);
-        // this.setState({ loading: false });
-        //   }
-        // );
-    };
+    // const removeSeatCallback = ({ row, number, id }, removeCb) => {
+    //     // this.setState(
+    //     //   {
+    //     //     loading: true
+    //     //   },
+    //     //   async () => {
+    //     // await new Promise(resolve => setTimeout(resolve, 1500));
+    //     console.log(`Removed seat ${number}, row ${row}, id ${id}`);
+    //     // A value of null will reset the tooltip to the original while '' will hide the tooltip
+    //     const newTooltip = ["A", "B", "C"].includes(row) ? null : "";
+    //     removeCb(row, number, newTooltip);
+    //     // this.setState({ loading: false });
+    //     //   }
+    //     // );
+    // };
 
 
 
@@ -196,33 +224,41 @@ export default function SeatMap() {
             <Container>
                 {isLoaded ? (
                     <div>
-                        {
-                            rows.map((i) => (
-                                <div>
-                                    <span>{i.name}</span>
-                                    <SeatPicker
-                                        rows={i.seats}
-                                        maxReservableSeats={3}
-                                        visible
-                                        addSeatCallback={addSeatCallback}
-                                        removeSeatCallback={removeSeatCallback} />
-                                </div>
+                       
+                       <div className={classes.seatMap}>
+                    <div className={classes.seatRow}>
+                        {[0.10]}
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData} >VV</div>
+                        </div>
+                        </div>
+                        </div>
 
-                            ))
-                        }
-                    </div>
-
-                    //     <SeatPicker
-                    //     // addSeatCallback={this.addSeatCallback}
-                    //     // removeSeatCallback={this.removeSeatCallback}
-                    //     rows={rows}
-                    //     maxReservableSeats={3}
-                    //     alpha
-                    //     visible
-                    //     selectedByDefault
-                    //     // loading={loading}
-                    //     tooltipProps={{ multiline: true }}
-                    //   />
+                        <div id="seatplan" className={classes.seatMap}>
+                        {rows.map((row)=>(
+                           <div>{row.name}</div>
+                           {(row.seats).map((seatRows)=>(
+                            <div className={classes.seatRow}>
+                            {seatRows.map((seatRow)=>(
+                                (seatRow !=null)?
+                                    <div className={classes.singleSeat}>
+                                    <div className={classes.seatData} >{seatRow.number}</div>
+                                </div>:<div></div>
+                                
+                            ))}
+                            </div>
+                        ))}
+                           
+                        )
+                        )
+}
+                        
+                      
+                        
+                        </div>
+                        
+                        </div>
+                        
                 ) : (
                     <p>eeeeee</p>
                 )}
@@ -249,7 +285,80 @@ export default function SeatMap() {
                     ) :
                     (<div><span></span></div>)
                 }
+                <div className={classes.seatMap}>
+                    <div className={classes.seatRow}>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData} >VV</div>
+                        </div>
+                        </div>
+                        </div>
+                <div className={classes.seatMap}>
+                    <div className={classes.seatRow}>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData} onClick={selectSeat("1")} >C11</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData} style={{ display: 'none' }}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}  style={{backgroundColor:selectedColor?'green':''}}>A1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
+                        <div className={classes.singleSeat}>
+                            <div className={classes.seatData}>C1</div>
+                        </div>
 
+
+
+                    </div>
+                    </div>
 
 
 
