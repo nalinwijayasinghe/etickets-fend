@@ -117,6 +117,9 @@ export default function BookingPage() {
         let result = await res.json();
         console.log(result)
         setIsLoaded(true);
+        console.log('dateeeeeeeeeeeeeee'+JSON.stringify(result.dates[0].date));
+        setselectedDate(result.dates[0].date);
+        
         //   setVenues(result.dates);
         let v = new Map();
         result.dates.forEach(

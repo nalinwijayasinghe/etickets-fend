@@ -10,30 +10,28 @@ import Typography from '@material-ui/core/Typography';
 
 export default function CastPage(props) {
     const classes = useStyles();
-    console.log(props.cast,"cast page before split");
-    console.log(props.cast.split(","),"split cast page");
-   // const [castitems,setCastitems]=useState(props.cast.split(","));
-   // console.log(castitems);
+    console.log('proppppppppssssssss'+JSON.stringify(props.cast));
+
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-           {props.cast.split(",").map(item=>(
-            
-                <Grid item xs={6} sm={6} md={3} sm={4} lg={2}>
-                    <Paper elevation={0} className={classes.paper}>
-                        <Avatar className={classes.avatarImage} alt="Remy Sharp" src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fdam%2Fimageserve%2F968210608%2F960x0.jpg%3Ffit%3Dscale" />
-                        <Typography variant="subtitle2" gutterBottom>
-                            {item}
-                        </Typography>
-                        <Typography variant="caption"  gutterBottom>
-                            Actor
-                        </Typography>
-                    </Paper>
-                </Grid>
-        
-            ))
-            } 
-            </Grid>       
+                {(props.cast).map(item => (
+
+                    <Grid item xs={6} sm={6} md={3} sm={4} lg={2}>
+                        <Paper elevation={0} className={classes.paper}>
+                            <Avatar className={classes.avatarImage} alt="Remy Sharp" src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fdam%2Fimageserve%2F968210608%2F960x0.jpg%3Ffit%3Dscale" />
+                            <Typography variant="subtitle2" gutterBottom>
+                                {item.name}
+                            </Typography>
+                            <Typography variant="caption" gutterBottom>
+                                Actor
+                            </Typography>
+                        </Paper>
+                    </Grid>
+
+                ))
+                }
+            </Grid>
         </div>
     );
 }
