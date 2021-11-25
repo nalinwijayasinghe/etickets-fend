@@ -184,7 +184,8 @@ export default function MovieDetails(props) {
                     Cast
                 </div>
                 {/* <div>{items.cast}</div> */}
-                {/* <CastPage cast={items.cast}/> */}
+                
+                <CastPage cast={items.actorDetails}/>
 
             </Container>
             
