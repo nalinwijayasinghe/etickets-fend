@@ -224,40 +224,36 @@ export default function SeatMap() {
             <Container>
                 {isLoaded ? (
                     <div>
-                       
-                       <div className={classes.seatMap}>
-                    <div className={classes.seatRow}>
-                        {[0.10]}
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData} >VV</div>
-                        </div>
-                        </div>
-                        </div>
+
+                        {/* <div className={classes.seatMap}>
+                            <div className={classes.seatRow}>
+                                {[0.10]}
+                                <div className={classes.singleSeat}>
+                                    <div className={classes.seatData} >VV</div>
+                                </div>
+                            </div>
+                        </div> */}
 
                         <div id="seatplan" className={classes.seatMap}>
-                        {rows.map((row)=>(
-                        //    <div>{row.name}</div>
-                           (row.seats).map((seatRows)=>(
-                            <div className={classes.seatRow}>
-                            {seatRows.map((seatRow)=>(
-                                (seatRow !=null)?
-                                    <div className={classes.singleSeat}>
-                                    <div className={classes.seatData} >{seatRow.number}</div>
-                                </div>:<div></div>
-                                
-                            ))}
-                            </div>
-                        ))                         
-                        )
-                        )
-}
-                        
-                      
-                        
+                            {rows.map((row) => (
+                                //    <div>{row.name}</div>
+                                (row.seats).map((seatRows) => (
+                                    <div className={classes.seatRow}>
+                                        {seatRows.map((seatRow) => (
+                                            (seatRow != null) ?
+                                                <div className={classes.singleSeat}>
+                                                    <div className={classes.seatData} >{seatRow.number}</div>
+                                                </div> : <div></div>
+
+                                        ))}
+                                    </div>
+                                ))
+                            )
+                            )
+                            }
                         </div>
-                        
-                        </div>
-                        
+                    </div>
+
                 ) : (
                     <p>eeeeee</p>
                 )}
@@ -284,83 +280,6 @@ export default function SeatMap() {
                     ) :
                     (<div><span></span></div>)
                 }
-                <div className={classes.seatMap}>
-                    <div className={classes.seatRow}>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData} >VV</div>
-                        </div>
-                        </div>
-                        </div>
-                <div className={classes.seatMap}>
-                    <div className={classes.seatRow}>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData} onClick={selectSeat("1")} >C11</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData} style={{ display: 'none' }}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}  style={{backgroundColor:selectedColor?'green':''}}>A1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-                        <div className={classes.singleSeat}>
-                            <div className={classes.seatData}>C1</div>
-                        </div>
-
-
-
-                    </div>
-                    </div>
-
-
-
             </Container>
 
             {/* Modal Start */}
@@ -418,8 +337,8 @@ const useStyles = makeStyles((theme) => ({
     },
     datesBackground: {
         boxShadow: "1px 3px 11px #ddd",
-        display:'flex',
-        flexDirection:'row'
+        display: 'flex',
+        flexDirection: 'row'
     },
     dateDetailsContainer: {
         display: 'flex'
@@ -542,8 +461,8 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
 
     },
-    seatNumberBtn:{
-        marginLeft:'auto'
+    seatNumberBtn: {
+        marginLeft: 'auto'
     }
 
 }));

@@ -46,6 +46,8 @@ export default function MovieCardComponent(props) {
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [eventId,setEventId]=useState(0);
     const [movieId, setMovieId] = useContext(EventContext);
+    const [movieGenres, setMovieGenres] = useContext(EventContext);
+
     const history = useHistory();
 
     useEffect(()=>{
@@ -59,11 +61,13 @@ export default function MovieCardComponent(props) {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log('Concert card is running');
+                console.log('Movie card is running');
                 console.log(result);
                 console.log(result.events);
+                console.log(result.genres,"genres");
                 setIsLoaded(true);
                 setItems(result.events);
+
 
             },
             (error) => {
@@ -83,18 +87,13 @@ export default function MovieCardComponent(props) {
       
     }
 
-    // function updateId(mId){
-    //     alert(mId);
-    //     setMovieId(mId);
-    //     window.location.href='/moviedetails'
-    // }
-
     return (
         <>
             {items.slice(0, limit ? limit : items.length).map(item => 
             (
+                
                 <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
-                    <Card className={classes.root}>
+                    <Card className={classes.root} onClick={() => updateId(item.eventId)} >
                         <CardActionArea>
                             <CardMedia
                                 component="img"
@@ -107,12 +106,14 @@ export default function MovieCardComponent(props) {
                                 <Typography className={classes.trucatedText} gutterBottom variant="h5" component="h2">
                                     {item.title}
                                 </Typography>
-                                <Typography className={classes.trucatedText} variant="body2" color="textSecondary" component="p">
-                                    Duration : {item.runtime}
-                                </Typography>
+                               {/* {item.genres.map(item=>( */}
+                                    <Typography className={classes.trucatedText} variant="body2" color="textSecondary" component="p">
+                                         Relese Year :{item.year}
+                                    </Typography>
+                                {/* ))} */}
                             </CardContent>
                         </CardActionArea>
-                        <CardActions>
+                        {/* <CardActions>
                             <Button size="small" color="primary">
                                 Share
                             </Button>
@@ -120,7 +121,7 @@ export default function MovieCardComponent(props) {
                                 Details
                             </Button>
                            
-                        </CardActions>
+                        </CardActions> */}
                     </Card>
                 </Grid>
             )

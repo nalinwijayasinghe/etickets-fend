@@ -66,7 +66,7 @@ export default function ButtonAppBar() {
                 </div>
                 <div className={classes.menuItemDrawer}>
                     <MusicVideoIcon style={{ color: '#64f24d' }} />
-                    <Link className={classes.Links} to="/movies">Events</Link>
+                    <Link className={classes.Links} to="/events">Events</Link>
                 </div>
                 <div className={classes.menuItemDrawer}>
                     <AccountCircleIcon style={{ color: '#f5671f' }} />
@@ -82,11 +82,11 @@ export default function ButtonAppBar() {
             <AppBar position="static" classes={{ root: classes.abRoot, }}>
                 <Container >
                     <Toolbar className={classes.appBarContainer}>
-                        <img src={Logo} height={50} />
+                    <Link className={classes.Links} to="/"><img src={Logo} height={50} /></Link>  
                         <div className={classes.desktopMenu}>
                             <div className={classes.menuItem}><HomeIcon style={{ color: '#fceae1' }} /><Link className={classes.Links} to="/">Home </Link></div>
                             <div className={classes.menuItem}><MovieIcon style={{ color: '#00aeef' }} /><Link className={classes.Links} to="/movies">Movies</Link></div>
-                            <div className={classes.menuItem}><MusicVideoIcon style={{ color: '#64f24d' }} /><Link className={classes.Links} to="/movies">Events</Link></div>
+                            <div className={classes.menuItem}><MusicVideoIcon style={{ color: '#64f24d' }} /><Link className={classes.Links} to="/events">Events</Link></div>
                             <div className={classes.menuItem}><AccountCircleIcon style={{ color: '#f5671f' }} /><Link className={classes.Links} to="/movies">Login</Link></div>
                         </div>
 
