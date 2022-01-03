@@ -42,7 +42,7 @@ export default function MovieCardComponent(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(7);
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [eventId,setEventId]=useState(0);
     const [movieId, setMovieId] = useContext(EventContext);

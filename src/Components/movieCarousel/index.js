@@ -33,13 +33,9 @@ export default function MoviesCarousel() {
         .then(
             (result) => {
                 console.log('Movie card is running on carousel');
-                //console.log(result);
-                //console.log(result.events);
-                //console.log(result.genres,"genres");
-                setIsLoaded(true);
+                console.log(result);
                 setItems(result.events);
-
-
+                setIsLoaded(true);
             },
             (error) => {
                 setIsLoaded(true);
@@ -48,6 +44,7 @@ export default function MoviesCarousel() {
         )
 
     },[])
+    
     const updateId = (mId) => {
         
         //alert(mId);
@@ -84,17 +81,25 @@ export default function MoviesCarousel() {
     };
 
     return (
-        <Carousel showDots={true} autoPlay={true} responsive={responsive} autoPlaySpeed={3000}  infinite={true} >
-
+        <div>
+           {isLoaded?
+           <Carousel showDots={true} autoPlay={true} responsive={responsive} autoPlaySpeed={3000}  infinite={true} >
             {items.map((item, idx) => (
-                        <div style={ {  height: 300, marginRight: 5, marginLeft: 5, backgroundImage: `url(${item.thumbnail})`, borderRadius: 5, backgroundPosition:'center center', backgroundSize:'cover', backgroundRepeat:'no-repeat' }} onClick={() => updateId(item.eventId)}>                     
-                         <div style={{color:'white'}}><h1>{item.title}</h1></div>
-                        </div>
+                       <div style={ {  height: 300, marginRight: 5, marginLeft: 5, backgroundImage: `url(${item.thumbnail})`, borderRadius: 5, backgroundPosition:'center center', backgroundSize:'cover', backgroundRepeat:'no-repeat' }} onClick={() => updateId(item.eventId)}>                     
+                        <div style={{color:'white'}}><h1>{item.title}</h1></div>
+                       </div>
+                      
                        
-                        
+           
+           ))}
+           </Carousel>
+           :<></>}
 
-            ))}
-        </Carousel>
+        </div>
+        
+            
+          
+        
     );
 }
 
