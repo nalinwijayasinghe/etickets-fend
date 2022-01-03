@@ -1,7 +1,3 @@
 
-<<<<<<< HEAD
-export const ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2NDEyMzc2MTB9.Z5RBVqeqA_USVMvXslPjPP347ibKjUgDwDstUzDXIyo"
-=======
 export const ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvbmxpbmUiLCJyb2xlcyI6WyJPTkxJTkUiLCJTVEFGRiJdLCJpc3MiOiIvbG9naW4iLCJleHAiOjE2NDEzMjA5Njh9.iAJxgA1rBlgm5PSXlVXCgxjHnn4kP28ooJG8SBTEJm0"
->>>>>>> dev
 
