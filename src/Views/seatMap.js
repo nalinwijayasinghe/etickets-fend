@@ -34,6 +34,9 @@ export default function SeatMap() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
     const [error, setError] = useState(null);
+    const [numberOfSeatsValue, setnumberOfSeatsValue] = useState(1);
+    const [numberOfSeats, setnumberOfSeats] = useState([1, 2, 3, 4, 5, 6]);
+
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     // const [childTicket,setChildTicket] =useState([0]);
     const options = [
@@ -49,6 +52,10 @@ export default function SeatMap() {
         setOpen(false);
     };
 
+    const selectNumberOfSeats = (numberOfSeat) => {
+        setnumberOfSeatsValue(numberOfSeat);
+        setOpen(false);
+    }
 
     useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
@@ -118,11 +125,18 @@ export default function SeatMap() {
     //     setSelectedColor(!selectedColor);}
 
     const selectSeat = (id) => {
-         console.log(id)
         // console.log(selectedSeat)
-         selectedSeat.push(id);
          //setSelectedSeat(selectedSeat)
          //console.log("user select a seat " + selectedSeat);
+        console.log('idddddddddddddddddddddddd' + id)
+        // console.log(selectedSeat)
+        selectedSeat.push(id);
+        numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
+
+
+
+        //setSelectedSeat(selectedSeat)
+        console.log("user select a seat " + selectedSeat);
         //  setAdultTicket( selectedSeat.length)
 
     }
@@ -225,14 +239,7 @@ export default function SeatMap() {
                 {isLoaded ? (
                     <div>
 
-                        {/* <div className={classes.seatMap}>
-                            <div className={classes.seatRow}>
-                                {[0.10]}
-                                <div className={classes.singleSeat}>
-                                    <div className={classes.seatData} >VV</div>
-                                </div>
-                            </div>
-                        </div> */}
+
 
                         <div id="seatplan" className={classes.seatMap}>
                             {rows.map((row) => (
@@ -242,7 +249,7 @@ export default function SeatMap() {
                                         {seatRows.map((seatRow) => (
                                             (seatRow != null) ?
                                                 <div className={classes.singleSeat}>
-                                                    <div className={classes.seatData} >{seatRow.number}</div>
+                                                    <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
                                                 </div> : <div></div>
 
                                         ))}
@@ -258,8 +265,9 @@ export default function SeatMap() {
                     <p>eeeeee</p>
                 )}
                 <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
-                <div>Selected Seats :{selectedSeat.map((seat, i) =>
-                    <span>{seat}</span>)}</div>
+                <div>{numberOfSeatsValue}</div>
+                <div className={classes.seatLabelAndvalue}>Selected Seats :{selectedSeat.map((seat, i) =>
+                    <div className={classes.selectedSeatItem}>{seat}</div>)}</div>
                 {selectedSeat.length > 0 ?
                     (
                         <div>
@@ -298,7 +306,10 @@ export default function SeatMap() {
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">Select number of seats</h2>
-                        <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
+                        {numberOfSeats.map((seatVal) => (
+                            <Button onClick={() => selectNumberOfSeats(seatVal)}>{seatVal}</Button>
+                        ))}
+
                     </div>
                 </Fade>
             </Modal>
@@ -463,6 +474,15 @@ const useStyles = makeStyles((theme) => ({
     },
     seatNumberBtn: {
         marginLeft: 'auto'
+    },
+    selectedSeatItem:{
+        color:'#0d9dd2',
+        fontSize:16,
+        fontWeight:'bold',
+        margin:'0 10px'
+    },
+    seatLabelAndvalue:{
+        display:'flex'
     }
 
 }));
