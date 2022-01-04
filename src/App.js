@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+//mport logo from './logo.svg';
 import './App.css';
-import AppBar from './Components/appBar';
+//import AppBar from './Components/appBar';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  
 } from "react-router-dom";
 import Home from './Views/home';
 import Movies from './Views/movies';

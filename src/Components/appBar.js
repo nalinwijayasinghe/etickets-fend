@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
+    //BrowserRouter as Router,
+    //Switch,
+    //Route,
     Link
 } from "react-router-dom";
 
@@ -10,20 +10,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+//import Typography from '@material-ui/core/Typography';
+//import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+//import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@material-ui/core/Container';
 import Logo from '../images/etickets_logo.png';
 import clsx from 'clsx';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+//import List from '@material-ui/core/List';
+//import Divider from '@material-ui/core/Divider';
+//import ListItem from '@material-ui/core/ListItem';
+//import ListItemIcon from '@material-ui/core/ListItemIcon';
+//import ListItemText from '@material-ui/core/ListItemText';
+//import Inbox//import MailIcon from '@material-ui/icons/Mail';
 import DehazeIcon from '@material-ui/icons/Dehaze';
 import HomeIcon from '@material-ui/icons/Home';
 import MovieIcon from '@material-ui/icons/Movie';
@@ -82,7 +81,7 @@ export default function ButtonAppBar() {
             <AppBar position="static" classes={{ root: classes.abRoot, }}>
                 <Container >
                     <Toolbar className={classes.appBarContainer}>
-                    <Link className={classes.Links} to="/"><img src={Logo} height={50} /></Link>  
+                    <Link className={classes.Links} to="/"><img src={Logo} alt="Logo" height={50} /></Link>  
                         <div className={classes.desktopMenu}>
                             <div className={classes.menuItem}><HomeIcon style={{ color: '#fceae1' }} /><Link className={classes.Links} to="/">Home </Link></div>
                             <div className={classes.menuItem}><MovieIcon style={{ color: '#00aeef' }} /><Link className={classes.Links} to="/movies">Movies</Link></div>
