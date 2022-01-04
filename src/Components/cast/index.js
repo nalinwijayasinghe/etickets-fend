@@ -15,7 +15,7 @@ export default function CastPage(props) {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-               z {(props.cast).map(item => (
+                {(props.cast).map(item => (
 
                     <Grid item xs={6} sm={6} md={3} sm={4} lg={2}>
                         <Paper elevation={0} className={classes.paper}>

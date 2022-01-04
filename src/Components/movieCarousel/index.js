@@ -5,17 +5,17 @@ import "react-multi-carousel/lib/styles.css";
 import {ACCESS_TOKEN} from '../constants';
 import { useHistory } from "react-router-dom";
 import { EventContext } from '../../eventContext';
-import { colors } from '@material-ui/core';
+//import { colors } from '@material-ui/core';
 
 export default function MoviesCarousel() {
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    const [limit, setLimit] = useState(5);
+    //const [limit, setLimit] = useState(5);
     const [movieId, setMovieId] = useContext(EventContext);
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
-    const [eventId,setEventId]=useState(0);
+    //const [eventId,setEventId]=useState(0);
     const history = useHistory();
 
 
@@ -87,7 +87,7 @@ export default function MoviesCarousel() {
         <Carousel showDots={true} autoPlay={true} responsive={responsive} autoPlaySpeed={3000}  infinite={true} >
 
             {items.map((item, idx) => (
-                        <div style={ {  height: 300, marginRight: 5, marginLeft: 5, backgroundImage: `url(${item.thumbnail})`, borderRadius: 5, backgroundPosition:'center center', backgroundSize:'cover', backgroundRepeat:'no-repeat' }} onClick={() => updateId(item.eventId)}>                     
+                        <div key={'carouselItem'+idx} style={ {  height: 300, marginRight: 5, marginLeft: 5, backgroundImage: `url(${item.thumbnail})`, borderRadius: 5, backgroundPosition:'center center', backgroundSize:'cover', backgroundRepeat:'no-repeat' }} onClick={() => updateId(item.eventId)}>                     
                          <div style={{color:'white'}}><h1>{item.title}</h1></div>
                         </div>
                        
