@@ -245,10 +245,10 @@ export default function SeatMap() {
                             {rows.map((row) => (
                                 //    <div>{row.name}</div>
                                 (row.seats).map((seatRows) => (
-                                    <div className={classes.seatRow}>
+                                    <div key={'seatRow'+seatRows} className={classes.seatRow}>
                                         {seatRows.map((seatRow) => (
                                             (seatRow != null) ?
-                                                <div className={classes.singleSeat}>
+                                                <div key={'seatRow'+seatRow} className={classes.singleSeat}>
                                                     <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
                                                 </div> : <div></div>
 
