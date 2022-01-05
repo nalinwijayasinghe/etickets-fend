@@ -66,15 +66,18 @@ export default function MovieCardComponent(props) {
                     console.log('Movie card is running');
                     console.log(result);
                     console.log(result.events);
-                    console.log(result.genres, "genres");
+                    console.log(result.events[0].runningStatus, "genres");
                     setIsLoaded(true);
                     setItems(result.events);
-                    // if (result.events.runningStatus == "NOW SHOWING") {
-                    //     setItemsNs(result.events)
-                    // }
-                    // console.log('newwwwwwsettttttt');
-                    // console.log(itemsNs);
-                    // console.log('newwwwwwsettttttt');
+
+                    result.events.forEach(element => {
+                        if (element.runningStatus == "NOW SHOWING") {
+                            setItemsNs(element);
+                        }
+                    });
+                    console.log('newwwwwwsettttttt');
+                    console.log(itemsNs);
+                    console.log('newwwwwwsettttttt');
 
                 },
                 (error) => {
