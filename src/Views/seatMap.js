@@ -33,6 +33,7 @@ export default function SeatMap() {
     const [childTicket, setChildTicket] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
+    const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
     const [numberOfSeatsValue, setnumberOfSeatsValue] = useState(1);
     const [numberOfSeats, setnumberOfSeats] = useState([1, 2, 3, 4, 5, 6]);
@@ -60,7 +61,7 @@ export default function SeatMap() {
     useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
         setChildTicket(8);
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2021-11-16&eventId=20&experienceId=1&showtimeId=19&venueId=2",
+        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
@@ -76,8 +77,8 @@ export default function SeatMap() {
                     // console.log(result.ticketData);
                     let data =result.ticketData;
                     console.log(data);
-                    setRows(data);
-                    console.log(",,,,,,,,,,,,,dddddddcccc,,,,,,,,,,,,,,,,,,,"+rows.length);
+                    setItems(result.ticketData);
+                    setRows(rows=>[...rows,data]);
                     //  console.log(rows[0].seats[0][0].id)
                     //let x=rows[0].seats;
                     // for (let row in rows) {
@@ -105,7 +106,6 @@ export default function SeatMap() {
                     //     })
                     // });
                     
-                    console.log(",,,,,,xxx,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
                     setChildTicket(7);
                     setIsLoaded(true);
                     console.log(isLoaded);
@@ -239,22 +239,24 @@ export default function SeatMap() {
                 {isLoaded ? (
                     <div>
 
-
+<p>{items[0].name}</p>
 
                         <div id="seatplan" className={classes.seatMap}>
-                            {rows.map((row) => (
-                                //    <div>{row.name}</div>
-                                (row.seats).map((seatRows) => (
-                                    <div key={'seatRow'+seatRows} className={classes.seatRow}>
-                                        {seatRows.map((seatRow) => (
-                                            (seatRow != null) ?
-                                                <div key={'seatRow'+seatRow} className={classes.singleSeat}>
-                                                    <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
-                                                </div> : <div></div>
-
-                                        ))}
-                                    </div>
-                                ))
+                            {items.map((row) => (
+                                row.seats !=undefined ?(
+                                    (row.seats ).map((seatRows) => (
+                                        <div key={'seatRow'+seatRows} className={classes.seatRow}>
+                                            {seatRows.map((seatRow) => (
+                                                (seatRow != null) ?
+                                                    <div key={'seatRow'+seatRow} className={classes.singleSeat}>
+                                                        <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
+                                                    </div> : <div></div>
+    
+                                            ))}
+                                        </div>
+                                    ))
+                                ):<div></div>
+                                
                             )
                             )
                             }
@@ -262,7 +264,7 @@ export default function SeatMap() {
                     </div>
 
                 ) : (
-                    <p>eeeeee</p>
+                    <p>Please wait !!!!</p>
                 )}
                 <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
                 <div>{numberOfSeatsValue}</div>
