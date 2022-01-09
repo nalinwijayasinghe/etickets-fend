@@ -94,7 +94,11 @@ export default function MovieDetails(props) {
                 Accept: 'application/json', },
             //body: form,
           })
-            .then(res => res.json())
+            .then(res =>{
+                if(res.status!=200)
+                    throw new Error("Unable to load movies "+res.status);
+                return res.json()
+            })
             .then(
                 (result) => {
                     console.log('Selected movie card is running');
@@ -104,15 +108,11 @@ export default function MovieDetails(props) {
                     setItems(result);
                     setIsLoaded(true);
 
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
                 }
-            )
+            ).catch((error)=>{
+                setIsLoaded(true);
+                setError(error);
+            })
     }, [])
 
 

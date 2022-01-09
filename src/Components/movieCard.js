@@ -45,9 +45,9 @@ export default function MovieCardComponent(props) {
     const [itemsNs, setItemsNs] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
-    //const [eventId,setEventId]=useState(0);
     const [movieId, setMovieId] = useContext(EventContext);
     const [movieGenres, setMovieGenres] = useContext(EventContext);
+    const [isError,setIsError] =useState(false);
 
     const history = useHistory();
 
@@ -60,12 +60,16 @@ export default function MovieCardComponent(props) {
                     Accept: 'application/json',
                 },
             })
-            .then(res => res.json())
+            .then((res) => {
+                if(res.status!=200)
+                    throw new Error("Unable to load movies "+res.status);
+                return res.json()
+            }
+            )
             .then(
                 (result) => {
-                    console.log('Movie card is running');
+                    console.log('loading movies ...');
                     console.log(result);
-                    console.log(result.events);
                     console.log(result.events[0].runningStatus, "genres");
                     setIsLoaded(true);
                     setItems(result.events);
@@ -84,7 +88,11 @@ export default function MovieCardComponent(props) {
                     setIsLoaded(true);
                     setError(error);
                 }
-            )
+            ).catch(error=>{
+                console.log("Error occured while executing api "+error);
+                setIsError(true);
+
+            })
 
     }, [])
 
@@ -99,45 +107,55 @@ export default function MovieCardComponent(props) {
 
     return (
         <>
-            {items.slice(0, limit ? limit : items.length).map(item =>
-            (
-                item.runningStatus == "NOW SHOWING" ?
-                    <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
-                        <Card className={classes.root} onClick={() => updateId(item.eventId)} >
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    alt={item.title}
-                                    height="250"
-                                    image={item.thumbnail}
-                                    title={item.title}
-                                />
-                                <CardContent>
-                                    <Typography className={classes.trucatedText} gutterBottom variant="h5" component="h2">
-                                        {item.title}
-                                    </Typography>
-                                    {/* {item.genres.map(item=>( */}
-                                    <Typography className={classes.trucatedText} variant="body2" color="textSecondary" component="p">
-                                        Relese Year :{item.year}
-                                    </Typography>
-                                    {/* ))} */}
-                                </CardContent>
-                            </CardActionArea>
-                            {/* <CardActions>
-                            <Button size="small" color="primary">
-                                Share
-                            </Button>
-                            <Button onClick={() => updateId(item.eventId)} size="small" color="primary">
-                                Details
-                            </Button>
-                           
-                        </CardActions> */}
-                        </Card>
-                    </Grid>
-                    : <div></div>
+        {(isError)?<p>
+            Opps !!! Something went wrong,Try again later
+        </p>:(
+            (items.length==0) ? <p>
+                Sorry !!! No movies available 
+            </p>:(
+                items.slice(0, limit ? limit : items.length).map(item =>
+                    (
+                        item.runningStatus == "NOW SHOWING" ?
+                            <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
+                                <Card className={classes.root} onClick={() => updateId(item.eventId)} >
+                                    <CardActionArea>
+                                        <CardMedia
+                                            component="img"
+                                            alt={item.title}
+                                            height="250"
+                                            image={item.thumbnail}
+                                            title={item.title}
+                                        />
+                                        <CardContent>
+                                            <Typography className={classes.trucatedText} gutterBottom variant="h5" component="h2">
+                                                {item.title}
+                                            </Typography>
+                                            {/* {item.genres.map(item=>( */}
+                                            <Typography className={classes.trucatedText} variant="body2" color="textSecondary" component="p">
+                                                Relese Year :{item.year}
+                                            </Typography>
+                                            {/* ))} */}
+                                        </CardContent>
+                                    </CardActionArea>
+                                    {/* <CardActions>
+                                    <Button size="small" color="primary">
+                                        Share
+                                    </Button>
+                                    <Button onClick={() => updateId(item.eventId)} size="small" color="primary">
+                                        Details
+                                    </Button>
+                                   
+                                </CardActions> */}
+                                </Card>
+                            </Grid>
+                            : <div></div>
+                    )
+                    )
             )
-            )
-            }
+            
+                
+        )}
+            
 
 
 
