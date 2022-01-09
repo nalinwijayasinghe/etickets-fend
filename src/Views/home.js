@@ -19,8 +19,6 @@ export default function Home() {
 
         <div className={classes.root}>
             <AppBar />
-            {/* <img className={classes.media} src={MovieBanner} alt='Main Banner' /> */}
-           
            <div style={{paddingTop:10, paddingBottom:25, width:'100%', }}>
             <Carousel/>
             </div>

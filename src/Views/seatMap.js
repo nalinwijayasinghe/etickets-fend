@@ -74,10 +74,10 @@ export default function SeatMap() {
                     console.log('Concert card is running....');
                     // console.log(result);
                     // console.log(result.ticketData);
-                    let data = result.ticketData;
+                    let data =result.ticketData;
                     console.log(data);
                     setRows(data);
-                    console.log(",,,,,,,,,,,,,dddddddcccc,,,,,,,,,,,,,,,,,,," + rows.length);
+                    console.log(",,,,,,,,,,,,,dddddddcccc,,,,,,,,,,,,,,,,,,,"+rows.length);
                     //  console.log(rows[0].seats[0][0].id)
                     //let x=rows[0].seats;
                     // for (let row in rows) {
@@ -91,9 +91,9 @@ export default function SeatMap() {
                     //             if(se[j]!=null){
                     //                 console.log("seat id ::-====================::::: "+ se[j].id);
                     //             }
-
+                                
                     //         }
-
+                            
                     //     }
                     // }
                     // console.log(">>>>>>>>>>>>>>>>>>>>>>...... c.c.>>>"+x[0][0].id)
@@ -104,7 +104,7 @@ export default function SeatMap() {
                     //         })
                     //     })
                     // });
-
+                    
                     console.log(",,,,,,xxx,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
                     setChildTicket(7);
                     setIsLoaded(true);
@@ -125,6 +125,9 @@ export default function SeatMap() {
     //     setSelectedColor(!selectedColor);}
 
     const selectSeat = (id) => {
+        // console.log(selectedSeat)
+         //setSelectedSeat(selectedSeat)
+         //console.log("user select a seat " + selectedSeat);
         console.log('idddddddddddddddddddddddd' + id)
         // console.log(selectedSeat)
         selectedSeat.push(id);
