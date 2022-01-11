@@ -21,7 +21,7 @@ import backgroundSMD from "../images/movieBanner.jpg";
 import CastPage from '../Components/cast';
 import Footer from '../Components/footer';
 import {EventContext} from '../eventContext';
-import {ACCESS_TOKEN} from '../Components/constants';
+import {ACCESS_TOKEN, BASE_URL} from '../Components/constants';
 
 
 function TabPanel(props) {
@@ -85,7 +85,7 @@ export default function MovieDetails(props) {
       const [movieGenres, setMovieGenres] = useContext(EventContext);
 
     useEffect(() => {
-        fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}`,{
+        fetch(BASE_URL+`/events/${movieId}`,{
             method: 'GET',
             headers: { 
 

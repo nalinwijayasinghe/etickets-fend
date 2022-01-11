@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import {ACCESS_TOKEN} from '../constants';
+import {ACCESS_TOKEN, BASE_URL} from '../constants';
 import { useHistory } from "react-router-dom";
 import { EventContext } from '../../eventContext';
 //import { colors } from '@material-ui/core';
@@ -22,7 +22,7 @@ export default function MoviesCarousel() {
 
 
     useEffect(()=>{
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
+        fetch(BASE_URL+"/events/online?eventTypes=MOVIE",
         {
             method:'GET',headers: {
                 Authorization:'Bearer '+ACCESS_TOKEN,
