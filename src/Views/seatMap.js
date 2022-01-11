@@ -15,7 +15,7 @@ import Fade from '@material-ui/core/Fade';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SeatPicker from "react-seat-picker";
-import { ACCESS_TOKEN } from '../Components/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../Components/constants';
 
 import "./seat_style.css";
 
@@ -29,6 +29,7 @@ export default function SeatMap() {
     const [selectedColor, setSelectedColor] = useState(false);
     const [open, setOpen] = React.useState(false);
     const [selectedSeat, setSelectedSeat] = useState([]);
+    const [isSelected, setIsSelected] = useState(false);
     const [adultTicket, setAdultTicket] = useState(0);
     const [childTicket, setChildTicket] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -61,7 +62,7 @@ export default function SeatMap() {
     useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
         setChildTicket(8);
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
+        fetch(BASE_URL+"/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
@@ -132,7 +133,10 @@ export default function SeatMap() {
         // console.log(selectedSeat)
         selectedSeat.push(id);
         numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
-
+        if(selectedSeat.includes(id)){
+            setIsSelected(true);
+            console.log('yesssssssssss'+selectedSeat+id);
+        }
 
 
         //setSelectedSeat(selectedSeat)
@@ -249,7 +253,7 @@ export default function SeatMap() {
                                             {seatRows.map((seatRow) => (
                                                 (seatRow != null) ?
                                                     <div key={'seatRow'+seatRow} className={classes.singleSeat}>
-                                                        <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
+                                                        <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: isSelected ? 'green' : '' }}>{seatRow.number}</div>
                                                     </div> : <div></div>
     
                                             ))}

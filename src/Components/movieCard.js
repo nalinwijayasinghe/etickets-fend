@@ -17,7 +17,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { EventContext } from '../eventContext';
-import { ACCESS_TOKEN } from '../Components/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../Components/constants';
 
 const useStyles = makeStyles({
     root: {
@@ -52,7 +52,7 @@ export default function MovieCardComponent(props) {
     const history = useHistory();
 
     useEffect(() => {
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/online?eventTypes=MOVIE",
+        fetch(BASE_URL+"/events/online?eventTypes=MOVIE",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
