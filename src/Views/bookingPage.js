@@ -16,7 +16,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { EventContext } from '../eventContext';
-import {ACCESS_TOKEN} from '../Components/constants';
+import {ACCESS_TOKEN, BASE_URL} from '../Components/constants';
 
 export default function BookingPage() {
     const classes = useStyles();
@@ -103,7 +103,7 @@ export default function BookingPage() {
 
     useEffect(async () => {
 
-        let res = await fetch(`http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/events/${movieId}/showtimes`, {
+        let res = await fetch(BASE_URL+`/events/${movieId}/showtimes`, {
             method: 'GET',
             headers: {
 
