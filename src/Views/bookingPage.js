@@ -26,6 +26,8 @@ export default function BookingPage() {
     useEffect(() => {
         //setMovieId(movieId);
         localStorage.setItem('movieId', movieId)
+        setVenues(venueShowtime.get("2022-01-11"));
+        setselectedDate("2022-01-11");
     }, []);
 
 
