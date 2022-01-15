@@ -16,11 +16,20 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SeatPicker from "react-seat-picker";
 import { ACCESS_TOKEN, BASE_URL } from '../Components/constants';
+import { EventContext } from '../eventContext';
 
 import "./seat_style.css";
 
 
-export default function SeatMap() {
+export default function SeatMap(props) {
+
+    const [slectedTime, setSlectedTime] = useContext(EventContext);
+    const [slectedDateShow, setSlectedDateShow] = useContext(EventContext);
+    useEffect(() => {
+        localStorage.setItem('selectedTime', slectedTime);
+        localStorage.setItem('slectedDateShow', slectedDateShow);
+    }, []);
+
     const classes = useStyles();
     let seat = {
         id: '',
@@ -36,8 +45,9 @@ export default function SeatMap() {
     const [rows, setRows] = useState([]);
     const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
-    const [numberOfSeatsValue, setnumberOfSeatsValue] = useState(1);
+    const [numberOfSeatsValue, setnumberOfSeatsValue] = useState(0);
     const [numberOfSeats, setnumberOfSeats] = useState([1, 2, 3, 4, 5, 6]);
+    const [selectedSeatValue, setSelectedSeatValue] = useState([]);
 
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     // const [childTicket,setChildTicket] =useState([0]);
@@ -56,13 +66,21 @@ export default function SeatMap() {
 
     const selectNumberOfSeats = (numberOfSeat) => {
         setnumberOfSeatsValue(numberOfSeat);
+        if(selectedSeatValue.includes(numberOfSeat)){
+            console.log('tyeeeeeee')
+            setSelectedSeatValue([]);
+        }
+        else{
+            selectedSeatValue.push(numberOfSeat);
+        }
         setOpen(false);
+
     }
 
     useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
         setChildTicket(8);
-        fetch(BASE_URL+"/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
+        fetch(BASE_URL + "/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
@@ -76,10 +94,10 @@ export default function SeatMap() {
                     console.log('Concert card is running....');
                     // console.log(result);
                     // console.log(result.ticketData);
-                    let data =result.ticketData;
+                    let data = result.ticketData;
                     console.log(data);
                     setItems(result.ticketData);
-                    setRows(rows=>[...rows,data]);
+                    setRows(rows => [...rows, data]);
                     //  console.log(rows[0].seats[0][0].id)
                     //let x=rows[0].seats;
                     // for (let row in rows) {
@@ -93,9 +111,9 @@ export default function SeatMap() {
                     //             if(se[j]!=null){
                     //                 console.log("seat id ::-====================::::: "+ se[j].id);
                     //             }
-                                
+
                     //         }
-                            
+
                     //     }
                     // }
                     // console.log(">>>>>>>>>>>>>>>>>>>>>>...... c.c.>>>"+x[0][0].id)
@@ -106,7 +124,7 @@ export default function SeatMap() {
                     //         })
                     //     })
                     // });
-                    
+
                     setChildTicket(7);
                     setIsLoaded(true);
                     console.log(isLoaded);
@@ -127,18 +145,18 @@ export default function SeatMap() {
 
     const selectSeat = (id) => {
         console.log('idddddddddddddddddddddddd -' + id)
-        if(selectedSeat.includes(id)){
-            console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,, "+id);
-            selectedSeat.splice(selectedSeat.indexOf(id),1);
+        if (selectedSeat.includes(id)) {
+            console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,, " + id);
+            selectedSeat.splice(selectedSeat.indexOf(id), 1);
             console.log(selectedSeat)
-             setSelectedSeat([...selectedSeat]) 
-        }else{
+            setSelectedSeat([...selectedSeat])
+        } else {
             selectedSeat.push(id);
             numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
-            
+
         }
         console.log("user select a seat " + selectedSeat);
-        
+
     }
     // const onAdultChange = (symbol)=>{
     //     console.log("on adult change")
@@ -206,7 +224,7 @@ export default function SeatMap() {
 
 
     return (
-        <>
+        <div className={classes.mainDiv}>
             <AppBar />
 
             <div className={classes.titleBackground}>
@@ -222,61 +240,77 @@ export default function SeatMap() {
                 <Container className={classes.dateDetailsContainer}>
                     <Button>
                         <div className={classes.singleDateActive}>
-                            <div className={classes.dateText}>11.00 am</div>
+                            <div className={classes.dateText}>{slectedTime}</div>
 
                         </div>
                     </Button>
                     <Button>
                         <div className={classes.singleDate}>
-                            <div className={classes.dateText}>13.00 pm</div>
+                            <div className={classes.dateText}>{slectedDateShow}</div>
 
                         </div>
                     </Button>
-                    <Button className={classes.seatNumberBtn} onClick={handleOpen}>Select number of seats</Button>
+                    <Button className={classes.seatNumberBtn} onClick={handleOpen}>Select number of seats <div className={classes.dropdownText}>&#9660;</div></Button>
                 </Container>
             </div>
             <Container>
-                {isLoaded ? (
-                    <div>
-
-<p>{items[0].name}</p>
-
-                        <div id="seatplan" className={classes.seatMap}>
-                            {items.map((row) => (
-                                row.seats !=undefined ?(
-                                    (row.seats ).map((seatRows) => (
-                                        <div key={'seatRow'+seatRows} className={classes.seatRow}>
-                                            {seatRows.map((seatRow) => (
-                                                (seatRow != null) ?
-                                                    <div key={'seatRow'+seatRow} className={classes.singleSeat}>
-                                                        <div className={selectedSeat.includes(seatRow.number)? classes.clickSeat :classes.seatData} onClick={() => selectSeat(seatRow.number)}>{seatRow.number}</div>
-                                                    </div> : <div></div>
-    
-                                            ))}
-                                        </div>
-                                    ))
-                                ):<div></div>
-                                
-                            )
-                            )
-                            }
-                        </div>
-                    </div>
-
+                {numberOfSeatsValue == 0 ? (
+                    <div className={classes.seatNoticeText}>Please select number of seats you need.</div>
                 ) : (
-                    <p>Please wait !!!!</p>
-                )}
+                    isLoaded ? (
+                        <div>
+
+                            <p>{items[0].name}</p>
+
+                            <div id="seatplan" className={classes.seatMap}>
+                                {items.map((row) => (
+                                    row.seats != undefined ? (
+                                        (row.seats).map((seatRows) => (
+                                            <div key={'seatRow' + seatRows} className={classes.seatRow}>
+                                                {seatRows.map((seatRow) => (
+                                                    (seatRow != null) ?
+                                                        <div key={'seatRow' + seatRow} className={classes.singleSeat}>
+                                                            <div className={selectedSeat.includes(seatRow.number) ? classes.clickSeat : classes.seatData} onClick={() => selectSeat(seatRow.number)}>{seatRow.number}</div>
+                                                        </div> : <div></div>
+
+                                                ))}
+                                            </div>
+                                        ))
+                                    ) : <div></div>
+
+                                )
+                                )
+                                }
+                            </div>
+                        </div>
+
+                    ) : (
+                        <p>Please wait...</p>
+                    ))}
+
+
                 <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
-                <div>{numberOfSeatsValue}</div>
-                <div className={classes.seatLabelAndvalue}>Selected Seats :{selectedSeat.map((seat, i) =>
-                    <div className={classes.selectedSeatItem}>{seat}</div>)}</div>
+                <div className={classes.singleRow}>
+                    <div>Number of seats</div>
+                    <div>{numberOfSeatsValue}</div>
+                </div>
+
+                <div className={classes.singleRow}>
+                    <div className={classes.seatLabelAndvalue}>Selected Seats</div>
+                    <div className={classes.subSingleRow}>{selectedSeat.map((seat, i) =>
+                        <div className={classes.selectedSeatItem}>{seat}</div>)}</div>
+
+                </div>
+
                 {selectedSeat.length > 0 ?
                     (
-                        <div>
-                            <div><span>Adult:{adultTicket}</span>:
-
-                                <span>{500 * selectedSeat.length}</span></div>
-                            <div><span>Child</span>:
+                        <div className={classes.selectedSeatDetails}>
+                            <div>
+                                <span>Adult:{adultTicket}</span>:
+                                <span>{500 * selectedSeat.length}</span>
+                            </div>
+                            <div>
+                                <span>Child</span>:
                                 <span>
                                     <div className={classes.btnAndText}>
                                         {/* <div className={classes.incDecBtn} onClick={onChildChange("+")}>-</div>
@@ -309,19 +343,24 @@ export default function SeatMap() {
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">Select number of seats</h2>
                         {numberOfSeats.map((seatVal) => (
-                            <Button onClick={() => selectNumberOfSeats(seatVal)}>{seatVal}</Button>
+                            <Button className={selectedSeatValue.includes(seatVal) ? classes.seclectedBtn : ''} onClick={() => selectNumberOfSeats(seatVal)}>{seatVal}</Button>
                         ))}
 
                     </div>
                 </Fade>
             </Modal>
             {/* Modal End */}
+            {numberOfSeatsValue == selectedSeat.length && !numberOfSeatsValue == 0 ? (<div className={classes.proceedDiv}>Proceed</div>
+            ) : (<div></div>)}
 
-        </>
+        </div>
     );
 }
 
 const useStyles = makeStyles((theme) => ({
+    mainDiv: {
+        position: 'relative'
+    },
     titleBackground: {
         backgroundColor: '#3b3b3b',
         padding: 24
@@ -434,13 +473,14 @@ const useStyles = makeStyles((theme) => ({
         //height:45,
         margin: '0px 5px'
     },
-    clickSeat:{
+    clickSeat: {
         backgroundColor: "green",
         borderRadius: 5,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border: '1px solid green'
+        border: '1px solid green',
+        color: '#fff'
     },
     seatData: {
         borderRadius: 5,
@@ -452,7 +492,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 13,
         color: '#505050',
         "&:hover": {
-            // backgroundColor: 'green',
+            backgroundColor: 'green',
             cursor: 'pointer',
             color: '#fff'
         },
@@ -485,14 +525,59 @@ const useStyles = makeStyles((theme) => ({
     seatNumberBtn: {
         marginLeft: 'auto'
     },
-    selectedSeatItem:{
-        color:'#0d9dd2',
-        fontSize:16,
-        fontWeight:'bold',
-        margin:'0 10px'
+    selectedSeatItem: {
+        color: '#20a3ca',
+        fontSize: 13,
+        fontWeight: 'bold',
+        marginLeft: '10px'
     },
-    seatLabelAndvalue:{
-        display:'flex'
+    seatLabelAndvalue: {
+        display: 'flex'
+    },
+    seatNoticeText: {
+        color: 'red',
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: 30,
+        marginBottom: 30,
+    },
+    dropdownText: {
+        marginTop: -1,
+        marginLeft: 5
+    },
+    proceedDiv: {
+
+        background: '#75d475',
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        textAlign: 'center',
+        padding: "15px 20px",
+    },
+    selectedSeatDetails: {
+
+    },
+    singleRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        maxWidth:600,
+        marginLeft:'auto',
+        marginRight:'auto',
+        background:'#eaeaea',
+        borderRadius:5,
+        padding:'5px 10px',
+        marginBottom:10
+    },
+    subSingleRow:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'flex-end'
+    },
+    seclectedBtn:{
+        background:'green'
     }
 
 }));

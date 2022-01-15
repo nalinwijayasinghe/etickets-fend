@@ -42,7 +42,6 @@ export default function MovieCardComponent(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    const [itemsNs, setItemsNs] = useState([]);
     const [limit, setLimit] = useState(5);
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     const [movieId, setMovieId] = useContext(EventContext);
@@ -52,7 +51,7 @@ export default function MovieCardComponent(props) {
     const history = useHistory();
 
     useEffect(() => {
-        fetch(BASE_URL+"/events/online?eventTypes=MOVIE",
+        fetch(BASE_URL+"/events/online?eventTypes=MOVIE&runningStatus=NOW_SHOWING",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
@@ -75,14 +74,7 @@ export default function MovieCardComponent(props) {
                     setIsLoaded(true);
                     setItems(result.events);
 
-                    result.events.forEach(element => {
-                        if (element.runningStatus == "NOW SHOWING") {
-                            setItemsNs(element);
-                        }
-                    });
-                    console.log('newwwwwwsettttttt');
-                    console.log(itemsNs);
-                    console.log('newwwwwwsettttttt');
+                   
 
                 },
                 (error) => {
@@ -116,7 +108,7 @@ export default function MovieCardComponent(props) {
             </p>:(
                 items.slice(0, limit ? limit : items.length).map(item =>
                     (
-                        item.runningStatus == "NOW SHOWING" ?
+                       
                             <Grid key={item.eventId} item xs={12} md={3} sm={6} xl={3}>
                                 <Card className={classes.root} onClick={() => updateId(item.eventId)} >
                                     <CardActionArea>
@@ -149,7 +141,7 @@ export default function MovieCardComponent(props) {
                                 </CardActions> */}
                                 </Card>
                             </Grid>
-                            : <div></div>
+                           
                     )
                     )
             )
