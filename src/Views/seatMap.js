@@ -126,23 +126,19 @@ export default function SeatMap() {
     //     setSelectedColor(!selectedColor);}
 
     const selectSeat = (id) => {
-        // console.log(selectedSeat)
-         //setSelectedSeat(selectedSeat)
-         //console.log("user select a seat " + selectedSeat);
-        console.log('idddddddddddddddddddddddd' + id)
-        // console.log(selectedSeat)
-        selectedSeat.push(id);
-        numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
+        console.log('idddddddddddddddddddddddd -' + id)
         if(selectedSeat.includes(id)){
-            setIsSelected(true);
-            console.log('yesssssssssss'+selectedSeat+id);
+            console.log(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,, "+id);
+            selectedSeat.splice(selectedSeat.indexOf(id),1);
+            console.log(selectedSeat)
+             setSelectedSeat([...selectedSeat]) 
+        }else{
+            selectedSeat.push(id);
+            numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
+            
         }
-
-
-        //setSelectedSeat(selectedSeat)
         console.log("user select a seat " + selectedSeat);
-        //  setAdultTicket( selectedSeat.length)
-
+        
     }
     // const onAdultChange = (symbol)=>{
     //     console.log("on adult change")
@@ -253,7 +249,7 @@ export default function SeatMap() {
                                             {seatRows.map((seatRow) => (
                                                 (seatRow != null) ?
                                                     <div key={'seatRow'+seatRow} className={classes.singleSeat}>
-                                                        <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: isSelected ? 'green' : '' }}>{seatRow.number}</div>
+                                                        <div className={selectedSeat.includes(seatRow.number)? classes.clickSeat :classes.seatData} onClick={() => selectSeat(seatRow.number)}>{seatRow.number}</div>
                                                     </div> : <div></div>
     
                                             ))}
@@ -438,17 +434,25 @@ const useStyles = makeStyles((theme) => ({
         //height:45,
         margin: '0px 5px'
     },
+    clickSeat:{
+        backgroundColor: "green",
+        borderRadius: 5,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid green'
+    },
     seatData: {
         borderRadius: 5,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         border: '1px solid green',
-
+        // backgroundColor: "red",
         fontSize: 13,
         color: '#505050',
         "&:hover": {
-            backgroundColor: 'green',
+            // backgroundColor: 'green',
             cursor: 'pointer',
             color: '#fff'
         },

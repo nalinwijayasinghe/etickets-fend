@@ -61,6 +61,7 @@ export default function MovieCardComponent(props) {
                 },
             })
             .then((res) => {
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+res.status);
                 if(res.status!=200)
                     throw new Error("Unable to load movies "+res.status);
                 return res.json()
