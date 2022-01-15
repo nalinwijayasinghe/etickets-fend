@@ -13,11 +13,16 @@ export const EventProvider = props => {
         return sltime ? sltime : '';
 
     });
+    const [slectedDateShow, setSlectedDateShow] = useState(() => {
+        const sldate = localStorage.getItem('slectedDateShow');
+        return sldate ? sldate : '';
+
+    });
     
 
 
     return (
-        <EventContext.Provider value={[movieId, setMovieId], [slectedTime, setSlectedTime]}>
+        <EventContext.Provider value={[movieId, setMovieId], [slectedTime, setSlectedTime], [slectedDateShow, setSlectedDateShow]}>
             {props.children}
         </EventContext.Provider>);
 }

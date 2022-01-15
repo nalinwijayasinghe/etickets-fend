@@ -24,7 +24,7 @@ export default function BookingPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [items, setItems] = useState({});
     const [venues, setVenues] = useState([]);
-    const [selectedDate, setselectedDate] = useContext(EventContext);
+    const [selectedDate, setselectedDate] = useState('');
     const [movieGenrs, setMovieGenrs] = useState([]);
     const [movieVenues, setMovieVenues] = useState([]);
     const [limit, setLimit] = useState(5);
@@ -40,6 +40,7 @@ export default function BookingPage() {
     const [openVenue, setOpenVenue] = React.useState(false);
     const [movieId, setMovieId] = useContext(EventContext);
     const [slectedTime, setSlectedTime] = useContext(EventContext);
+    const [slectedDateShow, setSlectedDateShow] = useContext(EventContext);
 
 
     useEffect(async () => {
@@ -74,6 +75,7 @@ export default function BookingPage() {
         localStorage.setItem('movieId', movieId)
         setVenues(venueShowtime.get(selectedDate));
         setselectedDate(selectedDate);
+        
     }, []);
 
 
@@ -92,6 +94,8 @@ export default function BookingPage() {
 
     const loadVenueShowTimes = (date) => {
         setselectedDate(date);
+        setSlectedDateShow(date);
+        console.log('adoooooooooooooooo'+date);
 
     }
     const getShowTime = (selectedShowTime) => {
