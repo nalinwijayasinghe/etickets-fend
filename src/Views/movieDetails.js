@@ -63,7 +63,7 @@ export default function MovieDetails(props) {
     const classes = useStyles();
     const [movieId, setMovieId] = useContext(EventContext);
     useEffect(() => {
-        //setMovieId(movieId);
+        
         localStorage.setItem('movieId', movieId )
         localStorage.setItem('movieGenrs', movieGenres )
 
