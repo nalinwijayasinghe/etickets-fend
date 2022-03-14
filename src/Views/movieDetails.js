@@ -99,10 +99,10 @@ export default function MovieDetails(props) {
                 (result) => {
                     console.log('Selected movie card is running');
                     console.log(result);
-                    // console.log(result.events);
-                    console.log(result.cast,"API movie deatils cast");
-                    setIsLoaded(true);
+                   //console.log(result.events);
+                    console.log(result.actorDetails,"API movie deatils cast");
                     setItems(result);
+                    setIsLoaded(true);
 
                 },
                 // Note: it's important to handle errors here
@@ -119,7 +119,9 @@ export default function MovieDetails(props) {
     return (
         <>
             <AppBar />
-            <div className={classes.mainImageSingleView} style={{backgroundImage: `url(${items.banner})`}}>
+            {isLoaded?(
+                <div>
+<div className={classes.mainImageSingleView} style={{backgroundImage: `url(${items.banner})`}}>
                 <div className={classes.OverlayDiv}></div>
                 <Container className={classes.gridContainer} >
                     <Grid container className={classes.bgContainer}>
@@ -188,6 +190,12 @@ export default function MovieDetails(props) {
                 <CastPage cast={items.actorDetails}/>
 
             </Container>
+                </div>
+                
+            ):(
+<p></p>
+            )}
+            
             
             <Footer />
         </>

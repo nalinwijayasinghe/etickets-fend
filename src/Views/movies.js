@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '../Components/appBar';
-import MovieCard from '../Components/movieCard';
+import MovieCardComponentPage from '../Components/movieCardsPage';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -63,11 +63,13 @@ export default function Movies() {
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <Grid container spacing={3}>
-                        <MovieCard />
+                        <MovieCardComponentPage runningStatus="NOW SHOWING" />
                     </Grid>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    No movies for this category
+                    <Grid container spacing={3}>
+                        <MovieCardComponentPage runningStatus="COMING SOON" />
+                    </Grid>
                 </TabPanel>
 
 

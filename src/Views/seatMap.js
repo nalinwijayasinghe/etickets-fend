@@ -33,7 +33,11 @@ export default function SeatMap() {
     const [childTicket, setChildTicket] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
+    const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
+    const [numberOfSeatsValue, setnumberOfSeatsValue] = useState(1);
+    const [numberOfSeats, setnumberOfSeats] = useState([1, 2, 3, 4, 5, 6]);
+
     const [clientToken, setclientToken] = useState('93d7759d-6988-4700-be5d-bdb805ec1d71');
     // const [childTicket,setChildTicket] =useState([0]);
     const options = [
@@ -49,11 +53,15 @@ export default function SeatMap() {
         setOpen(false);
     };
 
+    const selectNumberOfSeats = (numberOfSeat) => {
+        setnumberOfSeatsValue(numberOfSeat);
+        setOpen(false);
+    }
 
     useEffect(() => {
         console.log("ddddddddddddddddddddddddddddddddddddddddd")
         setChildTicket(8);
-        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2021-11-16&eventId=20&experienceId=1&showtimeId=19&venueId=2",
+        fetch("http://ec2-3-6-92-221.ap-south-1.compute.amazonaws.com:8081/v1/seats?eventDate=2022-01-05&eventId=21&experienceId=1&showtimeId=23&venueId=3",
             {
                 method: 'GET', headers: {
                     Authorization: 'Bearer ' + ACCESS_TOKEN,
@@ -62,16 +70,15 @@ export default function SeatMap() {
                 },
             })
             .then(res => res.json())
-            .then(
-                (result) => {
+            .then((result) => {
                     console.log('Concert card is running....');
                     // console.log(result);
                     // console.log(result.ticketData);
-                    let data = result.ticketData;
+                    let data =result.ticketData;
                     console.log(data);
-                    setRows(data);
-                    console.log(",,,,,,,,,,,,,dddddddcccc,,,,,,,,,,,,,,,,,,," + rows.length);
-                    //  console.log(rows[0].seats[0][0].id)
+                    setItems(result.ticketData);
+                    setRows(rows=>[...rows,data]);
+                    //console.log(rows[0].seats[0][0].id)
                     //let x=rows[0].seats;
                     // for (let row in rows) {
                     //     let type = result.ticketData[row];
@@ -84,9 +91,9 @@ export default function SeatMap() {
                     //             if(se[j]!=null){
                     //                 console.log("seat id ::-====================::::: "+ se[j].id);
                     //             }
-
+                                
                     //         }
-
+                            
                     //     }
                     // }
                     // console.log(">>>>>>>>>>>>>>>>>>>>>>...... c.c.>>>"+x[0][0].id)
@@ -97,8 +104,7 @@ export default function SeatMap() {
                     //         })
                     //     })
                     // });
-
-                    console.log(",,,,,,xxx,,,,,,,,ffffffff,,,,,,,,,,,,,,,,,,,,,,");
+                    
                     setChildTicket(7);
                     setIsLoaded(true);
                     console.log(isLoaded);
@@ -118,11 +124,18 @@ export default function SeatMap() {
     //     setSelectedColor(!selectedColor);}
 
     const selectSeat = (id) => {
-        console.log(id)
+        // console.log(selectedSeat)
+         //setSelectedSeat(selectedSeat)
+         //console.log("user select a seat " + selectedSeat);
+        console.log('idddddddddddddddddddddddd' + id)
         // console.log(selectedSeat)
         selectedSeat.push(id);
+        numberOfSeatsValue >= selectedSeat.length ? setSelectedSeat([...selectedSeat]) : setSelectedSeat([]);
+
+
+
         //setSelectedSeat(selectedSeat)
-        //console.log("user select a seat " + selectedSeat);
+        console.log("user select a seat " + selectedSeat);
         //  setAdultTicket( selectedSeat.length)
 
     }
@@ -225,29 +238,42 @@ export default function SeatMap() {
                 {isLoaded ? (
                     <div>
 
-                        {/* <div className={classes.seatMap}>
-                            <div className={classes.seatRow}>
-                                {[0.10]}
-                                <div className={classes.singleSeat}>
-                                    <div className={classes.seatData} >VV</div>
-                                </div>
-                            </div>
-                        </div> */}
+<p>{items[0].name}</p>
 
                         <div id="seatplan" className={classes.seatMap}>
-                            {rows.map((row) => (
-                                //    <div>{row.name}</div>
-                                (row.seats).map((seatRows) => (
-                                    <div className={classes.seatRow}>
-                                        {seatRows.map((seatRow) => (
-                                            (seatRow != null) ?
-                                                <div className={classes.singleSeat}>
-                                                    <div className={classes.seatData} >{seatRow.number}</div>
-                                                </div> : <div></div>
+                            {items.map((row) => (
+                                row.seats !=undefined ?(
+                                    (row.seats ).map((seatRows) => (
+                                        <div key={'seatRow'+seatRows} className={classes.seatRow}>
+                                            {seatRows.map((seatRow) => (
+                                                (seatRow != null) ?
+                                                    <div key={'seatRow'+seatRow} className={classes.singleSeat}>
+                                                        
+                                                        <div className={classes.seatData} onClick={() => selectSeat(seatRow.number)} style={{ backgroundColor: selectedColor ? 'green' : '' }}>{seatRow.number}</div>
+                                                    </div> : <div></div>
+    
+                                            ))}
+                                        </div>
+                                    ))
+                                ):<div></div>
+                                                
 
-                                        ))}
+                                
+                            )
+                            )
+                            }
+                        </div>
+                        <div>
+                        {items.map((row) => (
+                                              
+
+                                row.priceDetails.map((item)=>(
+                                    <div>
+                                        {console.log(item)}
+                                        {item.priceCategory}
                                     </div>
                                 ))
+                                                                
                             )
                             )
                             }
@@ -255,11 +281,12 @@ export default function SeatMap() {
                     </div>
 
                 ) : (
-                    <p>eeeeee</p>
+                    <p>Please wait !!!!</p>
                 )}
                 <div className={classes.dateTextLine}>Monday, September 06, 2021:X{[...selectedSeat]}</div>
-                <div>Selected Seats :{selectedSeat.map((seat, i) =>
-                    <span>{seat}</span>)}</div>
+                <div>{numberOfSeatsValue}</div>
+                <div className={classes.seatLabelAndvalue}>Selected Seats :{selectedSeat.map((seat, i) =>
+                    <div className={classes.selectedSeatItem}>{seat}</div>)}</div>
                 {selectedSeat.length > 0 ?
                     (
                         <div>
@@ -298,7 +325,10 @@ export default function SeatMap() {
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">Select number of seats</h2>
-                        <Link className={classes.Links} to="/seatmap"><Button>01</Button></Link>
+                        {numberOfSeats.map((seatVal) => (
+                            <Button onClick={() => selectNumberOfSeats(seatVal)}>{seatVal}</Button>
+                        ))}
+
                     </div>
                 </Fade>
             </Modal>
@@ -463,6 +493,15 @@ const useStyles = makeStyles((theme) => ({
     },
     seatNumberBtn: {
         marginLeft: 'auto'
+    },
+    selectedSeatItem:{
+        color:'#0d9dd2',
+        fontSize:16,
+        fontWeight:'bold',
+        margin:'0 10px'
+    },
+    seatLabelAndvalue:{
+        display:'flex'
     }
 
 }));
